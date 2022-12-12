@@ -1,5 +1,5 @@
-﻿
-using ByteBank;
+﻿using ByteBank;
+using System.Collections;
 
 namespace byteBank
 {
@@ -15,6 +15,9 @@ namespace byteBank
             Console.WriteLine("0 - Para sair do programa");
             Console.Write("\nDigite a opção desejada: ");
         }
+
+        // # Lista para guardar usuarios
+        static ArrayList usuarios = new ArrayList();
 
         // # Método criar usuario
         static void CriarUsuario()
@@ -32,14 +35,12 @@ namespace byteBank
             novoUsuario.salario = double.Parse(Console.ReadLine());
 
             // # Adicionando novo usuário na lista
-            usuarios = new List<Usuario>();
             usuarios.Add(novoUsuario);
         }
 
-        // # Lista para guardar usuarios
-        static List<Usuario> usuarios;
 
 
+        // # Método que mostra detalhes do usuário
         static void DetalhesUsuario() 
         {
             foreach (Usuario p in usuarios)
