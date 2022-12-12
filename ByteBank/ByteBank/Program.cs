@@ -5,6 +5,10 @@ namespace byteBank
 {
     class Program
     {
+
+        // # Lista para guardar usuarios
+        static ArrayList usuarios = new ArrayList();
+
         // # Método para mostrar o menu ao usuario
         static void ShowMenu()
         {
@@ -15,9 +19,6 @@ namespace byteBank
             Console.WriteLine("0 - Para sair do programa");
             Console.Write("\nDigite a opção desejada: ");
         }
-
-        // # Lista para guardar usuarios
-        static ArrayList usuarios = new ArrayList();
 
         // # Método criar usuario
         static void CriarUsuario()
@@ -38,6 +39,19 @@ namespace byteBank
             usuarios.Add(novoUsuario);
         }
 
+        // # Método para deletar usuario
+        static void DeletarUsuario(string nomeDeletar)
+        {
+
+            foreach (Usuario p in usuarios )
+            {
+                if(p.nome == nomeDeletar) 
+                {
+                    usuarios.Remove(p);
+                    break;
+                }
+            }
+        }
 
 
         // # Método que mostra detalhes do usuário
@@ -45,7 +59,11 @@ namespace byteBank
         {
             foreach (Usuario p in usuarios)
             {
-                Console.Write($"Nome usuário: {p.nome} | Idade usuário: {p.idade} | Salário usuário: {p.salario}");
+                Console.Write($"\nNome: {p.nome}" +
+                    $"\nIdade usuário: {p.idade}" +
+                    $"\nSalário usuário: {p.salario}"
+                    );
+
                 Console.WriteLine("\n\n");
             }
         }
@@ -72,6 +90,15 @@ namespace byteBank
                         break;
                     case 1:
                         CriarUsuario();
+                        break;
+                    case 2:
+                        
+                        string nomeDeletar = "";
+                        
+                        Console.WriteLine("Digite o nome do usuário que quer deletar: ");
+                        nomeDeletar = Console.ReadLine();
+
+                        DeletarUsuario(nomeDeletar);
                         break;
                     case 3:
                         DetalhesUsuario();
