@@ -40,6 +40,15 @@ namespace byteBank
         static List<Usuario> usuarios;
 
 
+        static void DetalhesUsuario() 
+        {
+            foreach (Usuario p in usuarios)
+            {
+                Console.Write($"Nome usuário: {p.nome} | Idade usuário: {p.idade} | Salário usuário: {p.salario}");
+                Console.WriteLine("\n\n");
+            }
+        }
+
 
         public static void Main(string[] args) 
         {
@@ -64,10 +73,7 @@ namespace byteBank
                         CriarUsuario();
                         break;
                     case 3:
-                        foreach (Usuario p in usuarios)
-                        {
-                            Console.WriteLine(p.nome + " " + p.idade + " " + p.salario);
-                        }
+                        DetalhesUsuario();
                         break;
                 }
 
