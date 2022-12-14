@@ -1,5 +1,6 @@
 ﻿using ByteBank;
 using System.Collections;
+using System.Drawing;
 
 namespace byteBank
 {
@@ -12,17 +13,24 @@ namespace byteBank
         // # Método para mostrar o menu ao usuario
         static void ShowMenu()
         {
+            Console.BackgroundColor = ConsoleColor.Red;
+            Console.ForegroundColor = ConsoleColor.Black;
+            Console.WriteLine("                       -------------------------- BEM-VINDO AO BYTEBANK --------------------------          ");
+            Console.ResetColor();
             Console.WriteLine("1 - Inserir novo usuário");
             Console.WriteLine("2 - Deletar um usuário");
-            Console.WriteLine("3 - Detalhes de um usuário");
+            Console.WriteLine("3 - Listar todas as contas registradas");
             Console.WriteLine("4 - Total armazenado no banco");
+            Console.WriteLine("5 - Detalhes de um usuário");
+            Console.WriteLine("6 - Manipular a conta");
             Console.WriteLine("0 - Para sair do programa");
             Console.Write("\nDigite a opção desejada: ");
         }
 
-        // # Método criar usuario
+        // # Case 1 Método criar usuario
         static void CriarUsuario()
         {
+            // # Instanciando objeto novoUsuario da classe Usuario
             Usuario novoUsuario = new Usuario("", 0, 0);
 
             Console.WriteLine("Digite o nome do usuário: ");
@@ -32,14 +40,14 @@ namespace byteBank
             novoUsuario.idade = int.Parse(Console.ReadLine());
 
 
-            Console.WriteLine("Digite o salário do usuario: ");
-            novoUsuario.salario = double.Parse(Console.ReadLine());
+            Console.WriteLine("Digite o saldo do usuario: ");
+            novoUsuario.saldo = double.Parse(Console.ReadLine());
 
             // # Adicionando novo usuário na lista
             usuarios.Add(novoUsuario);
         }
 
-        // # Método para deletar usuario
+        // # Case 2 Método para deletar usuario
         static void DeletarUsuario(string nomeDeletar)
         {
 
@@ -53,30 +61,33 @@ namespace byteBank
             }
         }
 
-
-        // # Método que mostra detalhes do usuário
+        // # Case 3 Método que mostra detalhes do usuário
         static void DetalhesUsuario() 
         {
             foreach (Usuario p in usuarios)
             {
                 Console.Write($"\nNome: {p.nome}" +
                     $"\nIdade usuário: {p.idade}" +
-                    $"\nSalário usuário: {p.salario}"
+                    $"\nSaldo usuário: {p.saldo}"
                     );
-
                 Console.WriteLine("\n\n");
             }
         }
 
+        // # Case 4 Método que mostra o saldo total no banco
+        static void MostrarSaldoTotalBanco(string nome)
+        {
+            foreach (Usuario p in usuarios)
+            {
+                if (p.nome == nome)
+                {
+                    Console.WriteLine($"Usuário: {p.nome} Total no banco: {p.saldo}");
+                }
+            }
+        }
 
         public static void Main(string[] args) 
         {
-            Console.WriteLine("Antes de começar a usar, vamos configurar alguns valores: ");
-
-            Console.WriteLine("Digite a quantidade de usuários: ");
-            int quantidadeDeUsuarios = int.Parse(Console.ReadLine());
-
-
             int option;
             do
             {
@@ -86,7 +97,9 @@ namespace byteBank
                 switch (option)
                 {
                     case 0:
-                        Console.WriteLine("-------- Encerrando programa --------");
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("                       -------------------------- Encerrando programa --------------------------          ");
+                        Console.ResetColor();
                         break;
                     case 1:
                         CriarUsuario();
@@ -103,13 +116,19 @@ namespace byteBank
                     case 3:
                         DetalhesUsuario();
                         break;
+                    case 4:
+                        string nome = "";
+
+                        Console.WriteLine("Digite o nome do usuário que você quer checar o valor total: ");
+                        nome = Console.ReadLine();
+
+                        MostrarSaldoTotalBanco(nome);
+                        break;
                 }
 
             } while (option != 0);
 
-
-
-  
         }
+
     }
 }

@@ -1,6 +1,9 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\ByteBank",
+    "\\ByteBank\\ByteBank"
   ],
+  "SelectedNode": "\\ByteBank\\ByteBank.sln",
   "PreviewInSolutionExplorer": false
 }
