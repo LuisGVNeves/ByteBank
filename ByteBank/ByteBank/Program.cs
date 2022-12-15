@@ -67,6 +67,14 @@ namespace byteBank
 
             // # Adicionando novo usuário na lista
             usuarios.Add(novoUsuario);
+
+
+            // # Mensagem de sucesso
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("Usuário criado com sucesso !");
+
+            System.Threading.Thread.Sleep(1500);
+            Console.Clear();
         }
 
         // # Case 2 Método para deletar usuario
@@ -78,6 +86,14 @@ namespace byteBank
                 if(p.nome == nomeDeletar) 
                 {
                     usuarios.Remove(p);
+
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("\nUsuário deletado com sucesso !\n");
+                    Console.ResetColor();
+
+                    System.Threading.Thread.Sleep(1500);
+                    Console.Clear();
+
                     break;
                 }
             }
@@ -96,6 +112,10 @@ namespace byteBank
                 Console.Write($"\n\nNome: {p.nome}\nIdade: {p.idade}\nSaldo: R${p.saldo}\n");
             }
             Console.WriteLine("\n\n\n");
+
+            // # Pausa antes do clear
+            System.Threading.Thread.Sleep(1500);
+            Console.Clear();
         }
 
         // # Case 4 Método que mostra o saldo total no banco
@@ -113,6 +133,11 @@ namespace byteBank
             }
             Console.WriteLine("\n\n");
 
+            // # Pausa antes do clear
+            System.Threading.Thread.Sleep(1500);
+            Console.Clear();
+
+
         }
 
         // # Case 5 Método que mostra detalhes de usuário
@@ -121,6 +146,7 @@ namespace byteBank
             Console.ForegroundColor = ConsoleColor.DarkYellow;
             Console.WriteLine("\n\n***DETALHES DO USUÁRIO***");
             Console.ResetColor();
+
             foreach (Usuario p in usuarios)
             {
                 if (p.nome == nome)
@@ -130,6 +156,11 @@ namespace byteBank
                 }
             }
             Console.WriteLine("\n\n");
+
+
+            // # Pausa antes do clear
+            System.Threading.Thread.Sleep(1500);
+            Console.Clear();
         }
 
         public static void Main(string[] args) 
@@ -158,7 +189,6 @@ namespace byteBank
                         break;
                     case 1:
                         CriarUsuario();
-                        Console.Clear();
                         break;
                     case 2:
                         string nomeDeletar = "";
