@@ -11,7 +11,9 @@ namespace byteBank
         // # Lista para guardar usuarios
         static ArrayList usuarios = new ArrayList();
 
-        
+        // Variavel global para manipular os métodos de saque e deposito
+        public static double saldoUsuario = 0.0;
+
         // # Método para mostrar o menu ao usuario
         static void ShowMenu()
         {
@@ -109,7 +111,7 @@ namespace byteBank
 
             foreach (Usuario p in usuarios)
             {
-                Console.Write($"\n\nNome: {p.nome}\nIdade: {p.idade}\nSaldo: R${p.saldo}\n");
+                Console.Write($"\n\nNome: {p.nome}\nIdade: {p.idade}\nSaldo: R${p.saldo.ToString("F2", CultureInfo.InvariantCulture)}\n");
             }
             Console.WriteLine("\n\n\n");
 
@@ -134,7 +136,7 @@ namespace byteBank
             Console.WriteLine("\n\n");
 
             // # Pausa antes do clear
-            System.Threading.Thread.Sleep(2300);
+            System.Threading.Thread.Sleep(3000);
             Console.Clear();
 
 
@@ -163,17 +165,28 @@ namespace byteBank
             Console.Clear();
         }
 
-
         // # Case 6 Método para manipular a conta do usuário
         static void ManipularConta(string nome)
         {
-            // Vai percorrer a lista de usuários e se achar o nome, vai chamar o Menu que da as opções de manusear a conta
+            #region Explicação da função ManipularConta
+            /*
+                  - Vai percorrer a lista de usuários e se achar o nome, vai pegar a variavel global saldoUsuario e
+                essa vai receber o valor do saldo atual do usuário
+
+                - Depois vai chamar o SubMenu
+
+                - Depois que ocorre o subMenu o usuario deposita ou saca, entao eu atualizo a propriedade saldo de novo para quando for checado o saldo total do banco, esteja com os valores corretos.
+            */
+            #endregion
+
             foreach (Usuario p in usuarios)
             {
                 if (p.nome == nome)
                 {
                     saldoUsuario = p.saldo;
                     MenuManusearConta();
+
+                    p.saldo = saldoUsuario;
                 }
             }
             
@@ -196,12 +209,15 @@ namespace byteBank
                 double valorSaque = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
                 RealizarSaque(valorSaque);
             }
+            if (respostaUsuario == 2)
+            {
+                Console.Write("\nDigite o valor a depositar: ");
+                double valorDepositado = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
+                RealizarDeposito(valorDepositado);
+            }
 
 
         }
-
-        // Variavel global para manipular os métodos de saque e deposito
-        public static double saldoUsuario = 0.0;
 
         // # Case 6 - Realizar Saque
         public static void RealizarSaque(double qtdSacar)
@@ -212,6 +228,10 @@ namespace byteBank
 
                 Console.WriteLine($"\nValor sacado: {qtdSacar.ToString("F2", CultureInfo.InvariantCulture)}\n");
                 Console.WriteLine($"Valor atual da conta: {saldoUsuario.ToString("F2", CultureInfo.InvariantCulture)}\n");
+
+                // # Pausa antes do clear
+                System.Threading.Thread.Sleep(3500);
+                Console.Clear();
             }
             else
             {
@@ -219,12 +239,41 @@ namespace byteBank
                 Console.WriteLine("Não é possível sacar, pois o saldo da conta é R$ 0.00");
                 Console.ResetColor();
                 Console.WriteLine($"Valor atual da conta: {saldoUsuario.ToString("F2", CultureInfo.InvariantCulture)}\n");
+
+                // # Pausa antes do clear
+                System.Threading.Thread.Sleep(3500);
+                Console.Clear();
             }
 
         }
 
+        // # Case 6 - Realizar Deposito
+        public static void RealizarDeposito(double qtdDeposito)
+        {
+            if (qtdDeposito > 0)
+            {
+                saldoUsuario += qtdDeposito;
 
+                Console.WriteLine($"\nValor depositado: {qtdDeposito.ToString("F2", CultureInfo.InvariantCulture)}\n");
+                Console.WriteLine($"Valor atual da conta: {saldoUsuario.ToString("F2", CultureInfo.InvariantCulture)}\n");
 
+                // # Pausa antes do clear
+                System.Threading.Thread.Sleep(3500);
+                Console.Clear();
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("\nNão é possível depositar, pois o valor do deposito é R$ 0.00");
+                Console.ResetColor();
+                Console.WriteLine($"\nValor atual da conta: {saldoUsuario.ToString("F2", CultureInfo.InvariantCulture)}\n");
+
+                // # Pausa antes do clear
+                System.Threading.Thread.Sleep(3500);
+                Console.Clear();
+            }
+
+        }
 
 
         public static void Main(string[] args) 
