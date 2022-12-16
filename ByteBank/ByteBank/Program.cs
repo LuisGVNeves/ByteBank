@@ -114,7 +114,7 @@ namespace byteBank
             Console.WriteLine("\n\n\n");
 
             // # Pausa antes do clear
-            System.Threading.Thread.Sleep(1500);
+            System.Threading.Thread.Sleep(2500);
             Console.Clear();
         }
 
@@ -134,7 +134,7 @@ namespace byteBank
             Console.WriteLine("\n\n");
 
             // # Pausa antes do clear
-            System.Threading.Thread.Sleep(1500);
+            System.Threading.Thread.Sleep(2300);
             Console.Clear();
 
 
@@ -159,19 +159,84 @@ namespace byteBank
 
 
             // # Pausa antes do clear
-            System.Threading.Thread.Sleep(1500);
+            System.Threading.Thread.Sleep(2500);
             Console.Clear();
         }
 
+
+        // # Case 6 Método para manipular a conta do usuário
+        static void ManipularConta(string nome)
+        {
+            // Vai percorrer a lista de usuários e se achar o nome, vai chamar o Menu que da as opções de manusear a conta
+            foreach (Usuario p in usuarios)
+            {
+                if (p.nome == nome)
+                {
+                    saldoUsuario = p.saldo;
+                    MenuManusearConta();
+                }
+            }
+            
+
+
+        }
+
+        // # Case 6 - SubMenu para manipular a conta
+        static void MenuManusearConta()
+        {
+            Console.WriteLine("\n1 - Fazer Saque");
+            Console.WriteLine("2 - Depositar");
+            Console.Write("\nDigite a opção desejada: ");
+
+            int respostaUsuario = int.Parse(Console.ReadLine());
+
+            if (respostaUsuario == 1)
+            {
+                Console.Write("\nDigite o valor a sacar: ");
+                double valorSaque = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
+                RealizarSaque(valorSaque);
+            }
+
+
+        }
+
+        // Variavel global para manipular os métodos de saque e deposito
+        public static double saldoUsuario = 0.0;
+
+        // # Case 6 - Realizar Saque
+        public static void RealizarSaque(double qtdSacar)
+        {
+            if (saldoUsuario > 0)
+            {
+                saldoUsuario -= qtdSacar;
+
+                Console.WriteLine($"\nValor sacado: {qtdSacar.ToString("F2", CultureInfo.InvariantCulture)}\n");
+                Console.WriteLine($"Valor atual da conta: {saldoUsuario.ToString("F2", CultureInfo.InvariantCulture)}\n");
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Não é possível sacar, pois o saldo da conta é R$ 0.00");
+                Console.ResetColor();
+                Console.WriteLine($"Valor atual da conta: {saldoUsuario.ToString("F2", CultureInfo.InvariantCulture)}\n");
+            }
+
+        }
+
+
+
+
+
         public static void Main(string[] args) 
         {
-
-
             int option;
             do
             {
                 ShowMenu();
                 option = int.Parse(Console.ReadLine());
+
+                // # Variável para manipular os parâmetros das funções, para deletar nome, procurar nome etc..
+                string nome = "";
 
                 /*
                     # A cada opção escolhida é chamada uma função referente a escolha do usuário
@@ -191,31 +256,33 @@ namespace byteBank
                         CriarUsuario();
                         break;
                     case 2:
-                        string nomeDeletar = "";
                         
                         Console.Write("\nDigite o nome do usuário que quer deletar: ");
-                        nomeDeletar = Console.ReadLine();
+                        nome = Console.ReadLine();
 
-                        DeletarUsuario(nomeDeletar);
+                        DeletarUsuario(nome);
                         break;
                     case 3:
                         ListarTodosUsuariosDoBanco();
                         break;
                     case 4:
-                        string nome = "";
-
                         Console.Write("\nDigite o nome do usuário para checar saldo total da conta: ");
                         nome = Console.ReadLine();
 
                         MostrarSaldoTotalBanco(nome);
                         break;
                     case 5:
-                        string nomeUsuario = "";
 
                         Console.Write("\nDigite o nome do usuário para checar as informações: ");
-                        nomeUsuario = Console.ReadLine();
+                        nome = Console.ReadLine();
 
-                        DetalhesUsuario(nomeUsuario);
+                        DetalhesUsuario(nome);
+                        break;
+                    case 6:
+                        Console.Write("\nDigite o nome do usuário que deseja manipular a conta: ");
+                        nome = Console.ReadLine();
+
+                        ManipularConta(nome);
                         break;
                 }
 
