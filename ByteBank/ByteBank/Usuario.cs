@@ -23,7 +23,7 @@ namespace ByteBank
         // # Lista para guardar usuarios
         public static ArrayList usuarios = new ArrayList();
 
-
+        
         public Usuario(string nome, string cpf, int idade, double saldo) 
         {
             this.nome = nome;
@@ -58,8 +58,51 @@ namespace ByteBank
             }
         }
 
-        // # Método para mostrar o menu ao usuario
-        public static void ShowMenu()
+        // # Método para mostrar o menu inicial
+        public static void MenuInicial(Usuario novoUsuario)
+        {
+
+            // # Boas vindas do banco
+            Console.BackgroundColor = ConsoleColor.Red;
+            Console.ForegroundColor = ConsoleColor.Black;
+            Console.WriteLine("-------------------------- BEM-VINDO AO BYTEBANK --------------------------");
+            Console.ResetColor();
+
+            
+
+
+            Console.WriteLine("\n");
+            Console.Write("Digite o nome completo do usuário: ");
+            novoUsuario.nome = Console.ReadLine();
+
+
+            Console.Write("Digite a idade do usuario: ");
+            novoUsuario.idade = int.Parse(Console.ReadLine());
+
+
+            Console.Write("Digite o CPF do usuario: ");
+            novoUsuario.cpf = Console.ReadLine();
+
+
+            Console.Write("Digite o saldo do usuario: ");
+            novoUsuario.saldo = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
+            Console.WriteLine("\n");
+
+
+            // # Adicionando novo usuário na lista
+            usuarios.Add(novoUsuario);
+
+
+            // # Mensagem de sucesso
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("Usuário criado com sucesso !");
+
+            System.Threading.Thread.Sleep(1500);
+            Console.Clear();
+        }
+
+        // # Método para mostrar o menu principal ao usuario
+        public static void ShowMenuPrincipal()
         {
             // # Boas vindas do banco
             Console.BackgroundColor = ConsoleColor.Red;
@@ -91,12 +134,8 @@ namespace ByteBank
         }
 
         // # Case 1 Método criar usuario
-        public static void CriarUsuario()
+        public static void CriarUsuario(Usuario novoUsuario)
         {
-
-            // # Instanciando objeto novoUsuario da classe Usuario
-            Usuario novoUsuario = new Usuario("", "", 0, 0);
-
 
             Console.WriteLine("\n");
             Console.Write("Digite o nome completo do usuário: ");
@@ -230,7 +269,13 @@ namespace ByteBank
                 if (p.nome == nome)
                 {
                     Console.ForegroundColor = ConsoleColor.Green;
-                    Console.WriteLine($"Saldo total no banco: R$ {p.saldo.ToString("F2", CultureInfo.InvariantCulture)}");
+                    Console.WriteLine($"\nSaldo total no banco: R$ {p.saldo.ToString("F2", CultureInfo.InvariantCulture)}");
+                    Console.ResetColor();
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("\nUsuário não encontrado no banco de dados !");
                     Console.ResetColor();
                 }
             }
@@ -256,8 +301,14 @@ namespace ByteBank
             {
                 if (p.nome == nome)
                 {
-                    Console.Write($"\nNome: {p.nome}\nIdade: {p.idade}\nSaldo: {p.saldo}");
+                    Console.Write($"\nNome: {p.nome}\nIdade: {p.idade}\nSaldo: {p.saldo}\nCPF:{p.cpf}");
                     break;
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Usuário não encontrado no banco de dados !");
+                    Console.ResetColor();
                 }
             }
             Console.WriteLine("\n\n");
@@ -293,6 +344,12 @@ namespace ByteBank
                     MenuManusearConta();
 
                     p.saldo = saldoUsuario;
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Usuário não encontrado no banco de dados !");
+                    Console.ResetColor();
                 }
             }
 

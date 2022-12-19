@@ -9,18 +9,24 @@ namespace byteBank
     {
         public static void Main(string[] args) 
         {
+            // # Instanciando objeto novoUsuario da classe Usuario
+            Usuario novoUsuario = new Usuario("", "", 0, 0);
+
+            // # Menu inicial pro usuário
+            Usuario.MenuInicial(novoUsuario);
+            
             int escolhaUsuario;
             do
             {
                 // # Método que mostra o menu ao usuário
-                Usuario.ShowMenu();
+                Usuario.ShowMenuPrincipal();
 
                 escolhaUsuario = int.Parse(Console.ReadLine());
 
                 switch (escolhaUsuario)
                 {
                     case 1:
-                        Usuario.CriarUsuario();
+                        Usuario.CriarUsuario(novoUsuario);
                         break;
                     case 2:
                         string cpf = "";
