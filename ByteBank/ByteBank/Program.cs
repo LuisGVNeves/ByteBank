@@ -16,7 +16,7 @@ namespace byteBank
                 option = int.Parse(Console.ReadLine());
 
                 // # Variável para manipular os parâmetros das funções, para deletar nome, procurar nome etc..
-                string nome = "";
+                string[] nome = { };
 
                 /*
                     # A cada opção escolhida é chamada uma função referente a escolha do usuário
@@ -40,9 +40,9 @@ namespace byteBank
                     case 2:
                         
                         Console.Write("\nDigite o nome do usuário que quer deletar: ");
-                        nome = Console.ReadLine();
+                        nome = Console.ReadLine().Split(' ');
 
-                        Usuario.DeletarUsuario(nome);
+                        Usuario.DeletarUsuario(nome[0]);
 
                         break;
                     case 3:
@@ -53,25 +53,25 @@ namespace byteBank
                     case 4:
 
                         Console.Write("\nDigite o nome do usuário para checar saldo total da conta: ");
-                        nome = Console.ReadLine();
+                        nome = Console.ReadLine().Split(' ');
 
-                        Usuario.MostrarSaldoTotalBanco(nome);
+                        Usuario.MostrarSaldoTotalBanco(nome[0]);
 
                         break;
                     case 5:
 
                         Console.Write("\nDigite o nome do usuário para checar as informações: ");
-                        nome = Console.ReadLine();
+                        nome = Console.ReadLine().Split(' ');
 
-                        Usuario.DetalhesUsuario(nome);
+                        Usuario.DetalhesUsuario(nome[0]);
 
                         break;
                     case 6:
 
                         Console.Write("\nDigite o nome do usuário que deseja manipular a conta: ");
-                        nome = Console.ReadLine();
+                        nome = Console.ReadLine().Split(' ');
 
-                        Usuario.ManipularConta(nome);
+                        Usuario.ManipularConta(nome[0]);
 
                         break;
                 }

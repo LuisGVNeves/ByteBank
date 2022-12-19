@@ -15,21 +15,22 @@ namespace ByteBank
         public string sobrenome;
         public int idade;
         public double saldo;
-
-
-        // # Lista para guardar usuarios
-        public static ArrayList usuarios = new ArrayList();
+        public string cpf;
 
         // Variavel global para manipular os métodos de saque e deposito
         public static double saldoUsuario = 0.0;
 
-        public Usuario(string nome, string sobrenome, int idade, double saldo) 
+        // # Lista para guardar usuarios
+        public static ArrayList usuarios = new ArrayList();
+
+
+        public Usuario(string nome, string sobrenome, string cpf, int idade, double saldo) 
         {
             this.nome = nome;
             this.idade = idade;
             this.saldo = saldo;
             this.sobrenome = sobrenome;
-
+            this.cpf = cpf;
         }
 
         // # Método para mostrar o menu ao usuario
@@ -69,7 +70,7 @@ namespace ByteBank
         {
 
             // # Instanciando objeto novoUsuario da classe Usuario
-            Usuario novoUsuario = new Usuario("", "", 0, 0);
+            Usuario novoUsuario = new Usuario("", "", "", 0, 0);
 
 
             Console.WriteLine("\n");
@@ -83,6 +84,10 @@ namespace ByteBank
 
             Console.Write("Digite a idade do usuario: ");
             novoUsuario.idade = int.Parse(Console.ReadLine());
+
+
+            Console.Write("Digite o CPF do usuario: ");
+            novoUsuario.cpf = Console.ReadLine();
 
 
             Console.Write("Digite o saldo do usuario: ");
@@ -281,7 +286,18 @@ namespace ByteBank
         // # Case 6 - Realizar Saque
         public static void RealizarSaque(double qtdSacar)
         {
-            if (saldoUsuario > 0)
+            if(qtdSacar > saldoUsuario)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Não é possivel sacar, pois você não tem esse valor em conta");
+                Console.ResetColor();
+                Console.WriteLine($"Valor atual da conta: {saldoUsuario.ToString("F2", CultureInfo.InvariantCulture)}\n");
+
+                // # Pausa antes do clear
+                System.Threading.Thread.Sleep(3500);
+                Console.Clear();
+            }
+            else if (saldoUsuario > 0)
             {
                 saldoUsuario -= qtdSacar;
 
