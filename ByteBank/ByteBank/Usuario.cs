@@ -32,6 +32,32 @@ namespace ByteBank
             this.cpf = cpf;
         }
 
+        // # Método para limpar o terminal
+        public static void LimparTerminal()
+        {
+            // # Tratamento pra ver se o usuário deseja limpar a tela
+
+            Console.Write("Deseja limpar a tela? SIM ou NÃO: ");
+            string perguntaUsuario = Console.ReadLine().ToUpper();
+
+            while (perguntaUsuario != "SIM")
+            {
+                System.Threading.Thread.Sleep(2000);
+                Console.Write("Deseja limpar a tela? SIM ou NÃO: ");
+                perguntaUsuario = Console.ReadLine().ToUpper();
+            }
+
+            if (perguntaUsuario == "SIM")
+            {
+                // # Pausa antes do clear
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("--- Limpando ---");
+                Console.ResetColor();
+                System.Threading.Thread.Sleep(1000);
+                Console.Clear();
+            }
+        }
+
         // # Método para mostrar o menu ao usuario
         public static void ShowMenu()
         {
@@ -182,15 +208,23 @@ namespace ByteBank
             }
             Console.WriteLine("\n\n\n");
 
-            // # Pausa antes do clear
-            System.Threading.Thread.Sleep(2500);
-            Console.Clear();
+            
+
+            LimparTerminal();
+            
         }
 
         // # Case 4 Método que mostra o saldo total no banco
-        public static void MostrarSaldoTotalBanco(string nome)
+        public static void MostrarSaldoTotalBanco()
         {
             Console.WriteLine("\n");
+
+            string nome = "";
+
+            Console.Write("Digite o nome do usuário para checar saldo total da conta: ");
+            nome = Console.ReadLine();
+
+
             foreach (Usuario p in usuarios)
             {
                 if (p.nome == nome)
@@ -202,19 +236,21 @@ namespace ByteBank
             }
             Console.WriteLine("\n\n");
 
-            // # Pausa antes do clear
-            System.Threading.Thread.Sleep(3000);
-            Console.Clear();
-
+            LimparTerminal();
 
         }
 
         // # Case 5 Método que mostra detalhes de usuário
-        public static void DetalhesUsuario(string nome)
+        public static void DetalhesUsuario()
         {
             Console.ForegroundColor = ConsoleColor.DarkYellow;
             Console.WriteLine("\n\n***DETALHES DO USUÁRIO***");
             Console.ResetColor();
+
+            string nome = "";
+
+            Console.Write("\nDigite o nome do usuário para checar as informações: ");
+            nome = Console.ReadLine();
 
             foreach (Usuario p in usuarios)
             {
@@ -227,13 +263,11 @@ namespace ByteBank
             Console.WriteLine("\n\n");
 
 
-            // # Pausa antes do clear
-            System.Threading.Thread.Sleep(2500);
-            Console.Clear();
+            LimparTerminal();
         }
 
         // # Case 6 Método para manipular a conta do usuário
-        public static void ManipularConta(string nome)
+        public static void ManipularConta()
         {
             #region Explicação da função ManipularConta
             /*
@@ -245,6 +279,11 @@ namespace ByteBank
                 - Depois que ocorre o subMenu o usuario deposita ou saca, entao eu atualizo a propriedade saldo de novo para quando for checado o saldo total do banco, esteja com os valores corretos.
             */
             #endregion
+
+            string nome = ""; 
+
+            Console.Write("\nDigite o nome do usuário que deseja manipular a conta: ");
+            nome = Console.ReadLine();
 
             foreach (Usuario p in usuarios)
             {
@@ -296,9 +335,7 @@ namespace ByteBank
                 Console.ResetColor();
                 Console.WriteLine($"Valor atual da conta: {saldoUsuario.ToString("F2", CultureInfo.InvariantCulture)}\n");
 
-                // # Pausa antes do clear
-                System.Threading.Thread.Sleep(3500);
-                Console.Clear();
+                LimparTerminal();
             }
             else if (saldoUsuario > 0)
             {
@@ -307,9 +344,7 @@ namespace ByteBank
                 Console.WriteLine($"\nValor sacado: {qtdSacar.ToString("F2", CultureInfo.InvariantCulture)}\n");
                 Console.WriteLine($"Valor atual da conta: {saldoUsuario.ToString("F2", CultureInfo.InvariantCulture)}\n");
 
-                // # Pausa antes do clear
-                System.Threading.Thread.Sleep(3500);
-                Console.Clear();
+                LimparTerminal();
             }
             else
             {
@@ -318,9 +353,7 @@ namespace ByteBank
                 Console.ResetColor();
                 Console.WriteLine($"Valor atual da conta: {saldoUsuario.ToString("F2", CultureInfo.InvariantCulture)}\n");
 
-                // # Pausa antes do clear
-                System.Threading.Thread.Sleep(3500);
-                Console.Clear();
+                LimparTerminal();
             }
 
         }
@@ -335,9 +368,7 @@ namespace ByteBank
                 Console.WriteLine($"\nValor depositado: {qtdDeposito.ToString("F2", CultureInfo.InvariantCulture)}\n");
                 Console.WriteLine($"Valor atual da conta: {saldoUsuario.ToString("F2", CultureInfo.InvariantCulture)}\n");
 
-                // # Pausa antes do clear
-                System.Threading.Thread.Sleep(3500);
-                Console.Clear();
+                LimparTerminal();
             }
             else
             {
@@ -346,11 +377,12 @@ namespace ByteBank
                 Console.ResetColor();
                 Console.WriteLine($"\nValor atual da conta: {saldoUsuario.ToString("F2", CultureInfo.InvariantCulture)}\n");
 
-                // # Pausa antes do clear
-                System.Threading.Thread.Sleep(3500);
-                Console.Clear();
+                LimparTerminal();
             }
 
         }
+
+
+
     }
 }
