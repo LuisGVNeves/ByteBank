@@ -9,7 +9,7 @@ namespace byteBank
     {
 
         // # Lista para guardar usuarios
-        static ArrayList usuarios = new ArrayList();
+        public static ArrayList usuarios = new ArrayList();
 
         // Variavel global para manipular os métodos de saque e deposito
         public static double saldoUsuario = 0.0;
@@ -51,13 +51,18 @@ namespace byteBank
         {
 
             // # Instanciando objeto novoUsuario da classe Usuario
-            Usuario novoUsuario = new Usuario("", 0, 0);
+            Usuario novoUsuario = new Usuario("","", 0, 0);
+
 
             Console.WriteLine("\n");
             Console.Write("Digite o nome do usuário: ");
             novoUsuario.nome = Console.ReadLine();
 
-            
+
+            Console.Write("Digite o sobrenome do usuário: ");
+            novoUsuario.sobrenome = Console.ReadLine();
+
+
             Console.Write("Digite a idade do usuario: ");
             novoUsuario.idade = int.Parse(Console.ReadLine());
 
@@ -87,16 +92,51 @@ namespace byteBank
             {
                 if(p.nome == nomeDeletar) 
                 {
-                    usuarios.Remove(p);
+                    string perguntaConfirmacao = "";
+                    Console.WriteLine($"\nO usuário: {nomeDeletar} {p.sobrenome} irá ser deletado, deseja realmente excluir a conta? SIM ou NÃO:");
+                    perguntaConfirmacao = Console.ReadLine().ToUpper();
 
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("\nUsuário deletado com sucesso !\n");
-                    Console.ResetColor();
+                    while (perguntaConfirmacao != "SIM" || perguntaConfirmacao != "NÃO" || perguntaConfirmacao != "NAO")
+                    {
+                        Console.WriteLine("\nDigite SIM ou NÃO !\n");
 
+                        System.Threading.Thread.Sleep(1000);
+
+                        Console.WriteLine($"\nO usuário: {nomeDeletar} {p.sobrenome} irá ser deletado, deseja realmente excluir a conta? SIM ou NÃO:");
+                        perguntaConfirmacao = Console.ReadLine().ToUpper();
+
+                        if (perguntaConfirmacao == "SIM")
+                        {
+                            usuarios.Remove(p);
+
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine("\nUsuário deletado com sucesso !\n");
+                            Console.ResetColor();
+
+                            System.Threading.Thread.Sleep(1500);
+                            Console.Clear();
+
+                            break;
+                        }
+                        if (perguntaConfirmacao == "NAO" || perguntaConfirmacao == "NÃO")
+                        {
+                            Console.ForegroundColor = ConsoleColor.Green;
+                            Console.WriteLine("\nOperação cancelada com sucesso !\n");
+                            Console.ResetColor();
+
+                            System.Threading.Thread.Sleep(1500);
+                            Console.Clear();
+                            break;
+
+                        }
+                    }
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("\nUsuário não encontrado na base de dados !");
                     System.Threading.Thread.Sleep(1500);
                     Console.Clear();
-
-                    break;
                 }
             }
         }
@@ -111,7 +151,7 @@ namespace byteBank
 
             foreach (Usuario p in usuarios)
             {
-                Console.Write($"\n\nNome: {p.nome}\nIdade: {p.idade}\nSaldo: R${p.saldo.ToString("F2", CultureInfo.InvariantCulture)}\n");
+                Console.Write($"\n\nNome: {p.nome} {p.sobrenome}\nIdade: {p.idade}\nSaldo: R${p.saldo.ToString("F2", CultureInfo.InvariantCulture)}\n");
             }
             Console.WriteLine("\n\n\n");
 
@@ -126,7 +166,7 @@ namespace byteBank
             Console.WriteLine("\n");
             foreach (Usuario p in usuarios)
             {
-                if (p.nome == nome)
+                if (p.nome == nome )
                 {
                     Console.ForegroundColor = ConsoleColor.Green;
                     Console.WriteLine($"Saldo total no banco: R$ {p.saldo.ToString("F2", CultureInfo.InvariantCulture)}");
@@ -153,7 +193,7 @@ namespace byteBank
             {
                 if (p.nome == nome)
                 {
-                    Console.Write($"\nNome: {p.nome}\nIdade: {p.idade}\nSaldo: {p.saldo}");
+                    Console.Write($"\nNome: {p.nome} {p.sobrenome}\nIdade: {p.idade}\nSaldo: {p.saldo}");
                     break;
                 }
             }
@@ -289,20 +329,22 @@ namespace byteBank
 
                 /*
                     # A cada opção escolhida é chamada uma função referente a escolha do usuário
-                na escolha de alguns cases, eu mudou a cor que vai ser o input do usuário com o 
+                na escolha de alguns cases, eu mudo a cor que vai ser o input do usuário com o 
                 Console.ForegroundColor, e depois que o usuário digita, eu reseto a cor do console
-
-                    - Se tirar o reset, todo o terminal fica com a cor referente ao foreground 
                 */
                 switch (option)
                 {
                     case 0:
+
                         Console.ForegroundColor = ConsoleColor.Red;
                         Console.WriteLine("-------------------------- Encerrando programa --------------------------");
                         Console.ResetColor();
+
                         break;
                     case 1:
+
                         CriarUsuario();
+
                         break;
                     case 2:
                         
@@ -310,15 +352,20 @@ namespace byteBank
                         nome = Console.ReadLine();
 
                         DeletarUsuario(nome);
+
                         break;
                     case 3:
+
                         ListarTodosUsuariosDoBanco();
+
                         break;
                     case 4:
+
                         Console.Write("\nDigite o nome do usuário para checar saldo total da conta: ");
                         nome = Console.ReadLine();
 
                         MostrarSaldoTotalBanco(nome);
+
                         break;
                     case 5:
 
@@ -326,12 +373,15 @@ namespace byteBank
                         nome = Console.ReadLine();
 
                         DetalhesUsuario(nome);
+
                         break;
                     case 6:
+
                         Console.Write("\nDigite o nome do usuário que deseja manipular a conta: ");
                         nome = Console.ReadLine();
 
                         ManipularConta(nome);
+
                         break;
                 }
 
