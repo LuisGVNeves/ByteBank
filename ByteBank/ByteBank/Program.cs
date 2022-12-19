@@ -38,11 +38,8 @@ namespace byteBank
 
                         break;
                     case 2:
-                        
-                        Console.Write("\nDigite o nome do usuário que quer deletar: ");
-                        nome = Console.ReadLine().Split(' ');
-
-                        Usuario.DeletarUsuario(nome[0]);
+                        string cpf = "";
+                        Usuario.DeletarUsuario(cpf);
 
                         break;
                     case 3:

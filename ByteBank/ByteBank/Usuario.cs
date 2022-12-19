@@ -24,12 +24,11 @@ namespace ByteBank
         public static ArrayList usuarios = new ArrayList();
 
 
-        public Usuario(string nome, string sobrenome, string cpf, int idade, double saldo) 
+        public Usuario(string nome, string cpf, int idade, double saldo) 
         {
             this.nome = nome;
             this.idade = idade;
             this.saldo = saldo;
-            this.sobrenome = sobrenome;
             this.cpf = cpf;
         }
 
@@ -70,16 +69,12 @@ namespace ByteBank
         {
 
             // # Instanciando objeto novoUsuario da classe Usuario
-            Usuario novoUsuario = new Usuario("", "", "", 0, 0);
+            Usuario novoUsuario = new Usuario("", "", 0, 0);
 
 
             Console.WriteLine("\n");
-            Console.Write("Digite o nome do usuário: ");
+            Console.Write("Digite o nome completo do usuário: ");
             novoUsuario.nome = Console.ReadLine();
-
-
-            Console.Write("Digite o sobrenome do usuário: ");
-            novoUsuario.sobrenome = Console.ReadLine();
 
 
             Console.Write("Digite a idade do usuario: ");
@@ -108,15 +103,23 @@ namespace ByteBank
         }
 
         // # Case 2 Método para deletar usuario
-        public static void DeletarUsuario(string nomeDeletar)
+        public static void DeletarUsuario(string cpf)
         {
+            string nome;
+
+            Console.Write("\nDigite o nome completo do usuário que quer deletar: ");
+            nome = Console.ReadLine();
+
+            Console.Write("\nConfirme o CPF do usuário: ");
+            cpf = Console.ReadLine();
 
             foreach (Usuario p in usuarios)
             {
-                if (p.nome == nomeDeletar)
+                if (nome == p.nome && cpf == p.cpf)
                 {
                     string perguntaConfirmacao = "";
-                    Console.WriteLine($"\nO usuário: {nomeDeletar} {p.sobrenome} irá ser deletado, deseja realmente excluir a conta? SIM ou NÃO:");
+                    Console.WriteLine($"\nO usuário: {p.nome} irá ser deletado, deseja realmente excluir a conta? SIM ou NÃO:");
+
                     perguntaConfirmacao = Console.ReadLine().ToUpper();
 
                     while (perguntaConfirmacao != "SIM" || perguntaConfirmacao != "NÃO" || perguntaConfirmacao != "NAO")
@@ -150,7 +153,7 @@ namespace ByteBank
 
                         System.Threading.Thread.Sleep(1000);
 
-                        Console.WriteLine($"\nO usuário: {nomeDeletar} {p.sobrenome} irá ser deletado, deseja realmente excluir a conta? SIM ou NÃO:");
+                        Console.WriteLine($"\nO usuário: {p.nome} irá ser deletado, deseja realmente excluir a conta? SIM ou NÃO:");
                         perguntaConfirmacao = Console.ReadLine().ToUpper();
 
                     }
@@ -175,7 +178,7 @@ namespace ByteBank
 
             foreach (Usuario p in usuarios)
             {
-                Console.Write($"\n\nNome: {p.nome} {p.sobrenome}\nIdade: {p.idade}\nSaldo: R${p.saldo.ToString("F2", CultureInfo.InvariantCulture)}\n");
+                Console.Write($"\n\nNome: {p.nome}\nIdade: {p.idade}\nSaldo: R${p.saldo.ToString("F2", CultureInfo.InvariantCulture)}\nCPF:{p.cpf}\n");
             }
             Console.WriteLine("\n\n\n");
 
@@ -217,7 +220,7 @@ namespace ByteBank
             {
                 if (p.nome == nome)
                 {
-                    Console.Write($"\nNome: {p.nome} {p.sobrenome}\nIdade: {p.idade}\nSaldo: {p.saldo}");
+                    Console.Write($"\nNome: {p.nome}\nIdade: {p.idade}\nSaldo: {p.saldo}");
                     break;
                 }
             }
