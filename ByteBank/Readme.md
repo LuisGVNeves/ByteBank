@@ -4,7 +4,7 @@
 
 ![image.png](ByteBank\img\image.png)
 
-### Como executar o projeto
+### Como executar o projeto,
 
 > Abrir arquivo `Program.cs`
 
