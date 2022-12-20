@@ -1,7 +1,8 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\Bytebank"
   ],
-  "SelectedNode": "\\ByteBank.sln",
+  "SelectedNode": "\\Bytebank\\Program.cs",
   "PreviewInSolutionExplorer": false
 }
