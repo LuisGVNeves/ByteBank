@@ -18,7 +18,7 @@ namespace byteBank
             int escolhaUsuario;
             do
             {
-                // # Método que mostra o menu ao usuário
+                // # Método que mostra o menu principal ao usuário
                 Usuario.ShowMenuPrincipal();
 
                 escolhaUsuario = int.Parse(Console.ReadLine());

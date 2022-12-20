@@ -12,7 +12,6 @@ namespace ByteBank
     {
         // # Variaveis publicas internas da classe Usuario
         public string nome;
-        public string sobrenome;
         public int idade;
         public double saldo;
         public string cpf;
@@ -68,8 +67,11 @@ namespace ByteBank
             Console.WriteLine("-------------------------- BEM-VINDO AO BYTEBANK --------------------------");
             Console.ResetColor();
 
-            
+            Console.WriteLine("ByteBank é um banco terminal feito em C#, com conhecimentos aprendidos");
+            Console.WriteLine("na escola Imã Learning Place.");
+            Console.WriteLine("\n\nPor favor, preencha seu cadastro antes de continuar:");
 
+            
 
             Console.WriteLine("\n");
             Console.Write("Digite o nome completo do usuário: ");
@@ -105,32 +107,32 @@ namespace ByteBank
         public static void ShowMenuPrincipal()
         {
             // # Boas vindas do banco
-            Console.BackgroundColor = ConsoleColor.Red;
+            Console.BackgroundColor = ConsoleColor.Gray;
             Console.ForegroundColor = ConsoleColor.Black;
-            Console.WriteLine("-------------------------- BEM-VINDO AO BYTEBANK --------------------------");
+            Console.WriteLine("-------------------------- INTERFACE BYTEBANK --------------------------");
             Console.ResetColor();
 
-            Console.WriteLine("1 - Inserir novo usuário");
+            Console.WriteLine("\n                        1 - Inserir novo usuário");
 
             Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("2 - Deletar um usuário");
+            Console.WriteLine("                        2 - Deletar um usuário");
             Console.ResetColor();
 
             Console.ForegroundColor = ConsoleColor.Magenta;
-            Console.WriteLine("3 - Listar todas as contas registradas");
+            Console.WriteLine("                        3 - Listar todas as contas registradas");
             Console.ResetColor();
 
             Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine("4 - Total armazenado no banco");
+            Console.WriteLine("                        4 - Total armazenado no banco");
             Console.ResetColor();
 
             Console.ForegroundColor = ConsoleColor.DarkYellow;
-            Console.WriteLine("5 - Detalhes de um usuário");
+            Console.WriteLine("                        5 - Detalhes de um usuário");
             Console.ResetColor();
 
-            Console.WriteLine("6 - Manipular a conta");
-            Console.WriteLine("0 - Para sair do programa");
-            Console.Write("\nDigite a opção desejada: ");
+            Console.WriteLine("                        6 - Manipular a conta");
+            Console.WriteLine("                        0 - Para sair do programa");
+            Console.Write("\n                        Digite a opção desejada: ");
         }
 
         // # Case 1 Método criar usuario
@@ -260,7 +262,7 @@ namespace ByteBank
 
             string nome = "";
 
-            Console.Write("Digite o nome do usuário para checar saldo total da conta: ");
+            Console.Write("Digite o nome completo do usuário para checar saldo total da conta: ");
             nome = Console.ReadLine();
 
 
