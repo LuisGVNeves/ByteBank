@@ -1,6 +1,10 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\ByteBank",
+    "\\ByteBank\\ByteBank",
+    "\\ByteBank\\ByteBank\\Entities"
   ],
+  "SelectedNode": "\\ByteBank\\ByteBank\\Entities\\Banco.cs",
   "PreviewInSolutionExplorer": false
 }

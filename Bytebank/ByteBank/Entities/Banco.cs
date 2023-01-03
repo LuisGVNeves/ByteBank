@@ -1,4 +1,6 @@
-﻿using System;
+﻿using byteBank;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -10,65 +12,70 @@ namespace ClasseBanco
 {
     internal class Banco
     {
+        // # Lista para guardar usuarios
+        public static ArrayList usuarios = new ArrayList();
+
         // Variavel global para manipular os métodos de saque e deposito
         public static double saldoUsuario = 0.0;
 
-        // # Case 1 Método criar usuario
-        public static void CriarUsuario(int escolhaUsuario)
+        // # Case 1 Método criar usuario no banco
+        public static void CriarUsuario()
         {
-            Usuario novoUsuario1 = new Usuario("", "", 0, 0, "");
+            // # Instanciando objeto novoUsuario da classe Usuario
+            Usuario novoUsuario = new Usuario("", "", 0, 0, "");
 
-            int contador = 1;
-            while (escolhaUsuario == 1)
+            while (true)
             {
                 Console.Write("\nDigite o nome completo do usuário: ");
-                novoUsuario1.Nome = Console.ReadLine();
-
-
+                novoUsuario.Nome = Console.ReadLine();
+                
                 Console.Write("Digite a idade do usuario: ");
-                novoUsuario1.Idade = int.Parse(Console.ReadLine());
-
+                novoUsuario.Idade = int.Parse(Console.ReadLine());
 
                 Console.Write("Digite o CPF do usuario: ");
-                novoUsuario1.Cpf = Console.ReadLine();
-
+                novoUsuario.Cpf = Console.ReadLine();
 
                 Console.Write("Digite o saldo do usuario: ");
-                novoUsuario1.Saldo = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
+                novoUsuario.Saldo = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
                 Console.WriteLine("\n");
 
                 Console.Write("Digite a senha do usuario: ");
-                novoUsuario1.Senha = Console.ReadLine();
+                novoUsuario.Senha = Console.ReadLine();
                 Console.WriteLine("\n");
 
-
-                // # Incrementando Id do usuario
-                novoUsuario1.Id++;
-
-                contador++;
-
+                usuarios.Add(novoUsuario);
 
                 // # Mensagem de sucesso
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine("Usuário criado com sucesso !");
+                Console.ResetColor();
 
-                // # Adicionando novo usuário na lista
-                Usuario.usuarios.Add(novoUsuario1);
-
-                Console.Write("Deseja criar um novo usuário? Sim ou NÃO: ");
-                string novaEscolhaUsuario = Console.ReadLine();
-                if (novaEscolhaUsuario == "NÃO" || novaEscolhaUsuario == "NAO")
+                // # Se na contagem do array já tiver pelo menos 1 usuário, eu posso mostrar a msg de criar um novo usuario
+                if(usuarios.Count > 1)
+                {
+                     Console.Write("\n\nDeseja criar um novo usuário? Sim ou NÃO: ");
+                    
+                    string novaEscolhaUsuario = Console.ReadLine().ToUpper();
+                    if (novaEscolhaUsuario == "NÃO" || novaEscolhaUsuario == "NAO")
+                    {
+                        System.Threading.Thread.Sleep(1500);
+                        Console.Clear();
+                        break;
+                    }
+                }
+                else
                 {
                     System.Threading.Thread.Sleep(1500);
                     Console.Clear();
                     break;
                 }
 
+
             }
 
         }
 
-        // # Case 2 Método para deletar usuario
+        // # Case 2 Método para deletar usuario no banco
         public static void DeletarUsuario(string cpf)
         {
             Console.Write("\nDigite o nome completo do usuário que quer deletar: ");
@@ -77,7 +84,7 @@ namespace ClasseBanco
             Console.Write("\nConfirme o CPF do usuário: ");
             cpf = Console.ReadLine();
 
-            foreach (Usuario p in Usuario.usuarios)
+            foreach (Usuario p in usuarios)
             {
                 if (nome == p.Nome && cpf == p.Cpf)
                 {
@@ -90,7 +97,7 @@ namespace ClasseBanco
                     {
                         if (perguntaConfirmacao == "SIM")
                         {
-                            Usuario.usuarios.Remove(p);
+                            usuarios.Remove(p);
 
                             Console.ForegroundColor = ConsoleColor.Red;
                             Console.WriteLine("\nUsuário deletado com sucesso !\n");
@@ -123,12 +130,6 @@ namespace ClasseBanco
                     }
                     break;
                 }
-                else
-                {
-                    Console.WriteLine("\nUsuário não encontrado na base de dados !");
-                    System.Threading.Thread.Sleep(1500);
-                    Console.Clear();
-                }
             }
         }
 
@@ -139,7 +140,7 @@ namespace ClasseBanco
             Console.WriteLine("\n\n***LISTA DE USUÁRIOS BYTEBANK***");
             Console.ResetColor();
 
-            foreach (Usuario p in Usuario.usuarios)
+            foreach (Usuario p in usuarios)
             {
                 Console.Write($"\n\nNome: {p.Nome}\nIdade: {p.Idade}\nSaldo: R${p.Saldo.ToString("F2", CultureInfo.InvariantCulture)}\nCPF:{p.Cpf}\n");
             }
@@ -155,23 +156,41 @@ namespace ClasseBanco
             Console.Write("\nDigite o nome completo do usuário para checar saldo total da conta: ");
             nome = Console.ReadLine();
 
-            string senha = "";
-            Console.Write("\nDigite a senha do usuário para checar saldo total da conta: ");
-            senha = Console.ReadLine();
-
-            foreach (Usuario p in Usuario.usuarios)
+            foreach (Usuario usuario in usuarios)
             {
-                if (nome == p.Nome && senha == p.Senha)
+                try
                 {
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    Console.WriteLine($"\nSaldo total no banco: R$ {p.Saldo.ToString("F2", CultureInfo.InvariantCulture)}");
-                    Console.ResetColor();
-                    break;
+                    if(nome == usuario.Nome)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.WriteLine($"\nSaldo total no banco: R$ {usuario.Saldo.ToString("F2", CultureInfo.InvariantCulture)}");
+                        Console.ResetColor();
+
+                        Usuario.LimparTerminal();
+                        break;
+                    }
+                    else
+                    {
+                        System.Threading.Thread.Sleep(1000);
+                        Console.Clear();
+                        
+                        Console.ForegroundColor = ConsoleColor.DarkGreen;
+                        Console.WriteLine("Procurando usuário.. \n");
+                        Console.ResetColor();
+
+                        System.Threading.Thread.Sleep(1000);
+                        Console.Clear();
+                    }
+                }
+                catch
+                {
+                    if (nome != usuario.Nome)
+                    {
+                        Usuario.LimparTerminal();
+                        break;
+                    }
                 }
             }
-            Console.WriteLine("\n\n");
-            Usuario.LimparTerminal();
-
         }
 
         // # Case 5 Método que mostra detalhes de usuário
@@ -184,20 +203,12 @@ namespace ClasseBanco
             Console.Write("\nDigite o nome do usuário para checar as informações: ");
             string nome = Console.ReadLine();
 
-            foreach (Usuario p in Usuario.usuarios)
+            foreach (Usuario p in usuarios)
             {
                 if (p.Nome == nome)
                 {
                     Console.Write($"\nNome: {p.Nome}\nIdade: {p.Idade}\nSaldo: {p.Saldo}\nCPF:{p.Cpf}");
-                    break;
                 }
-                /*else
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Usuário não encontrado no banco de dados !");
-                    Console.ResetColor();
-                }
-                */
             }
             Console.WriteLine("\n\n");
 
@@ -220,7 +231,7 @@ namespace ClasseBanco
             Console.Write("\nDigite o nome do usuário que deseja manipular a conta: ");
             string nome = Console.ReadLine();
 
-            foreach (Usuario p in Usuario.usuarios)
+            foreach (Usuario p in usuarios)
             {
                 if (p.Nome == nome)
                 {
@@ -232,12 +243,6 @@ namespace ClasseBanco
 
                     // Depois que usuário depositou ou sacou, vou atualizar novamente o saldo do usuário
                     p.Saldo = saldoUsuario;
-                }
-                else
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Usuário não encontrado no banco de dados !");
-                    Console.ResetColor();
                 }
             }
         }
