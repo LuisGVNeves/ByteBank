@@ -1,8 +1,9 @@
 {
   "ExpandedNodes": [
     "",
-    "\\Bytebank"
+    "\\Bytebank",
+    "\\Bytebank\\Entities"
   ],
-  "SelectedNode": "\\Bytebank\\Program.cs",
+  "SelectedNode": "\\Bytebank\\Entities\\Usuario.cs",
   "PreviewInSolutionExplorer": false
 }

@@ -1,4 +1,4 @@
-﻿using ByteBank;
+﻿using byteBank; 
 using System.Collections;
 using System.Drawing;
 using System.Globalization;
@@ -9,12 +9,14 @@ namespace byteBank
     {
         public static void Main(string[] args) 
         {
-            // # Instanciando objeto novoUsuario da classe Usuario
-            Usuario novoUsuario = new Usuario("", "", 0, 0);
-
             // # Menu inicial pro usuário
-            Usuario.MenuInicial(novoUsuario);
-            
+            Usuario.MenuInicial();
+
+            // # Instanciando objeto novoUsuario da classe Usuario
+            Usuario novoUsuario = new Usuario("", "", 0, 0,"");
+
+            Usuario.PreencherInformacoesUsuario(novoUsuario);
+
             int escolhaUsuario;
             do
             {
@@ -26,7 +28,7 @@ namespace byteBank
                 switch (escolhaUsuario)
                 {
                     case 1:
-                        Usuario.CriarUsuario(novoUsuario);
+                        Usuario.CriarUsuario(escolhaUsuario);
                         break;
                     case 2:
                         string cpf = "";

@@ -6,15 +6,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ByteBank
+
+namespace byteBank
 {
     internal class Usuario
     {
-        // # Variaveis publicas internas da classe Usuario
-        public string nome;
-        public int idade;
-        public double saldo;
-        public string cpf;
+        // # Atributos Usuario
+        public string Nome;
+        public int Idade;
+        public double Saldo;
+        public string Cpf;
+        public string Senha;
+        public int Id;
 
         // Variavel global para manipular os métodos de saque e deposito
         public static double saldoUsuario = 0.0;
@@ -22,13 +25,14 @@ namespace ByteBank
         // # Lista para guardar usuarios
         public static ArrayList usuarios = new ArrayList();
 
-        
-        public Usuario(string nome, string cpf, int idade, double saldo) 
+        // # Constructor
+        public Usuario(string nome, string cpf, int idade, double saldo, string senha)
         {
-            this.nome = nome;
-            this.idade = idade;
-            this.saldo = saldo;
-            this.cpf = cpf;
+            this.Nome = nome;
+            this.Idade = idade;
+            this.Saldo = saldo;
+            this.Cpf = cpf;
+            this.Senha = senha;
         }
 
         // # Método para limpar o terminal
@@ -58,42 +62,42 @@ namespace ByteBank
         }
 
         // # Método para mostrar o menu inicial
-        public static void MenuInicial(Usuario novoUsuario)
+        public static void MenuInicial()
         {
-
             // # Boas vindas do banco
             Console.BackgroundColor = ConsoleColor.Red;
             Console.ForegroundColor = ConsoleColor.Black;
             Console.WriteLine("-------------------------- BEM-VINDO AO BYTEBANK --------------------------");
             Console.ResetColor();
-
             Console.WriteLine("ByteBank é um banco terminal feito em C#, com conhecimentos aprendidos");
             Console.WriteLine("na escola Imã Learning Place.");
             Console.WriteLine("\n\nPor favor, preencha seu cadastro antes de continuar:");
-
-            
-
             Console.WriteLine("\n");
-            Console.Write("Digite o nome completo do usuário: ");
-            novoUsuario.nome = Console.ReadLine();
+        }
 
+        // # Método para preencher as informações do primeiro usuário criado - class Program Line 17
+        public static void PreencherInformacoesUsuario(Usuario novoUsuario)
+        {
+            Console.Write("Digite o nome completo do usuário: ");
+            novoUsuario.Nome = Console.ReadLine();
 
             Console.Write("Digite a idade do usuario: ");
-            novoUsuario.idade = int.Parse(Console.ReadLine());
-
+            novoUsuario.Idade = int.Parse(Console.ReadLine());
 
             Console.Write("Digite o CPF do usuario: ");
-            novoUsuario.cpf = Console.ReadLine();
-
+            novoUsuario.Cpf = Console.ReadLine();
 
             Console.Write("Digite o saldo do usuario: ");
-            novoUsuario.saldo = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
+            novoUsuario.Saldo = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
             Console.WriteLine("\n");
 
+
+            Console.Write("Digite a senha do usuario: ");
+            novoUsuario.Senha = Console.ReadLine();
+            Console.WriteLine("\n");
 
             // # Adicionando novo usuário na lista
             usuarios.Add(novoUsuario);
-
 
             // # Mensagem de sucesso
             Console.ForegroundColor = ConsoleColor.Green;
@@ -135,57 +139,77 @@ namespace ByteBank
             Console.Write("\n                        Digite a opção desejada: ");
         }
 
+
         // # Case 1 Método criar usuario
-        public static void CriarUsuario(Usuario novoUsuario)
+        public static void CriarUsuario(int escolhaUsuario)
         {
+            Usuario novoUsuario1 = new Usuario("", "", 0, 0, "");
 
-            Console.WriteLine("\n");
-            Console.Write("Digite o nome completo do usuário: ");
-            novoUsuario.nome = Console.ReadLine();
-
-
-            Console.Write("Digite a idade do usuario: ");
-            novoUsuario.idade = int.Parse(Console.ReadLine());
-
-
-            Console.Write("Digite o CPF do usuario: ");
-            novoUsuario.cpf = Console.ReadLine();
+            int contador = 1;
+            while (escolhaUsuario == 1)
+            {
+                Console.Write("\nDigite o nome completo do usuário: ");
+                novoUsuario1.Nome = Console.ReadLine();
 
 
-            Console.Write("Digite o saldo do usuario: ");
-            novoUsuario.saldo = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
-            Console.WriteLine("\n");
+                Console.Write("Digite a idade do usuario: ");
+                novoUsuario1.Idade = int.Parse(Console.ReadLine());
 
 
-            // # Adicionando novo usuário na lista
-            usuarios.Add(novoUsuario);
+                Console.Write("Digite o CPF do usuario: ");
+                novoUsuario1.Cpf = Console.ReadLine();
 
 
-            // # Mensagem de sucesso
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine("Usuário criado com sucesso !");
+                Console.Write("Digite o saldo do usuario: ");
+                novoUsuario1.Saldo = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
+                Console.WriteLine("\n");
 
-            System.Threading.Thread.Sleep(1500);
-            Console.Clear();
+                Console.Write("Digite a senha do usuario: ");
+                novoUsuario1.Senha = Console.ReadLine();
+                Console.WriteLine("\n");
+
+
+                // # Incrementando Id do usuario
+                novoUsuario1.Id++;
+
+                contador++;
+                
+
+                // # Mensagem de sucesso
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("Usuário criado com sucesso !");
+
+                // # Adicionando novo usuário na lista
+                usuarios.Add(novoUsuario1);
+
+                Console.Write("Deseja criar um novo usuário? Sim ou NÃO: ");
+                string novaEscolhaUsuario = Console.ReadLine();
+                if (novaEscolhaUsuario == "NÃO" || novaEscolhaUsuario == "NAO")
+                {
+                    System.Threading.Thread.Sleep(1500);
+                    Console.Clear();
+                    break;
+                }
+
+            }
+
         }
 
         // # Case 2 Método para deletar usuario
         public static void DeletarUsuario(string cpf)
         {
-            string nome;
-
             Console.Write("\nDigite o nome completo do usuário que quer deletar: ");
-            nome = Console.ReadLine();
+            string nome = Console.ReadLine();
 
             Console.Write("\nConfirme o CPF do usuário: ");
             cpf = Console.ReadLine();
 
             foreach (Usuario p in usuarios)
             {
-                if (nome == p.nome && cpf == p.cpf)
+                if (nome == p.Nome && cpf == p.Cpf)
                 {
                     string perguntaConfirmacao = "";
-                    Console.WriteLine($"\nO usuário: {p.nome} irá ser deletado, deseja realmente excluir a conta? SIM ou NÃO:");
+                    Console.WriteLine($"\nO usuário: {p.Nome} irá ser deletado, deseja realmente excluir a conta? SIM ou NÃO:");
 
                     perguntaConfirmacao = Console.ReadLine().ToUpper();
 
@@ -220,7 +244,7 @@ namespace ByteBank
 
                         System.Threading.Thread.Sleep(1000);
 
-                        Console.WriteLine($"\nO usuário: {p.nome} irá ser deletado, deseja realmente excluir a conta? SIM ou NÃO:");
+                        Console.WriteLine($"\nO usuário: {p.Nome} irá ser deletado, deseja realmente excluir a conta? SIM ou NÃO:");
                         perguntaConfirmacao = Console.ReadLine().ToUpper();
 
                     }
@@ -242,47 +266,36 @@ namespace ByteBank
             Console.WriteLine("\n\n***LISTA DE USUÁRIOS BYTEBANK***");
             Console.ResetColor();
 
-
             foreach (Usuario p in usuarios)
             {
-                Console.Write($"\n\nNome: {p.nome}\nIdade: {p.idade}\nSaldo: R${p.saldo.ToString("F2", CultureInfo.InvariantCulture)}\nCPF:{p.cpf}\n");
+                Console.Write($"\n\nNome: {p.Nome}\nIdade: {p.Idade}\nSaldo: R${p.Saldo.ToString("F2", CultureInfo.InvariantCulture)}\nCPF:{p.Cpf}\n");
             }
             Console.WriteLine("\n\n\n");
-
-            
-
             LimparTerminal();
-            
         }
 
         // # Case 4 Método que mostra o saldo total no banco
         public static void MostrarSaldoTotalBanco()
         {
-            Console.WriteLine("\n");
-
             string nome = "";
-
-            Console.Write("Digite o nome completo do usuário para checar saldo total da conta: ");
+            Console.Write("\nDigite o nome completo do usuário para checar saldo total da conta: ");
             nome = Console.ReadLine();
 
+            string senha = "";
+            Console.Write("\nDigite a senha do usuário para checar saldo total da conta: ");
+            senha = Console.ReadLine();
 
             foreach (Usuario p in usuarios)
             {
-                if (p.nome == nome)
+                if (nome == p.Nome && senha == p.Senha)
                 {
                     Console.ForegroundColor = ConsoleColor.Green;
-                    Console.WriteLine($"\nSaldo total no banco: R$ {p.saldo.ToString("F2", CultureInfo.InvariantCulture)}");
+                    Console.WriteLine($"\nSaldo total no banco: R$ {p.Saldo.ToString("F2", CultureInfo.InvariantCulture)}");
                     Console.ResetColor();
-                }
-                else
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("\nUsuário não encontrado no banco de dados !");
-                    Console.ResetColor();
+                    break;
                 }
             }
             Console.WriteLine("\n\n");
-
             LimparTerminal();
 
         }
@@ -294,24 +307,23 @@ namespace ByteBank
             Console.WriteLine("\n\n***DETALHES DO USUÁRIO***");
             Console.ResetColor();
 
-            string nome = "";
-
             Console.Write("\nDigite o nome do usuário para checar as informações: ");
-            nome = Console.ReadLine();
+            string nome = Console.ReadLine();
 
             foreach (Usuario p in usuarios)
             {
-                if (p.nome == nome)
+                if (p.Nome == nome)
                 {
-                    Console.Write($"\nNome: {p.nome}\nIdade: {p.idade}\nSaldo: {p.saldo}\nCPF:{p.cpf}");
+                    Console.Write($"\nNome: {p.Nome}\nIdade: {p.Idade}\nSaldo: {p.Saldo}\nCPF:{p.Cpf}");
                     break;
                 }
-                else
+                /*else
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("Usuário não encontrado no banco de dados !");
                     Console.ResetColor();
                 }
+                */
             }
             Console.WriteLine("\n\n");
 
@@ -320,32 +332,32 @@ namespace ByteBank
         }
 
         // # Case 6 Método para manipular a conta do usuário
+        #region Comentário explicando a função ManipularConta
+            /*
+            - Vai percorrer a lista de usuários e se achar o nome, vai pegar a variavel global saldoUsuario e
+            essa vai receber o valor do saldo atual do usuário
+            - Depois vai chamar o MENU para manusear a conta, então usuario pode depositar ou sacar, 
+            depois que o usuário fazer um desses dois, eu atualizo a propriedade saldo.
+            - Oara quando for checado o saldo total do banco, esteja com os valores atualizados.
+            */
+        #endregion
         public static void ManipularConta()
         {
-            #region Explicação da função ManipularConta
-            /*
-                  - Vai percorrer a lista de usuários e se achar o nome, vai pegar a variavel global saldoUsuario e
-                essa vai receber o valor do saldo atual do usuário
-
-                - Depois vai chamar o SubMenu
-
-                - Depois que ocorre o subMenu o usuario deposita ou saca, entao eu atualizo a propriedade saldo de novo para quando for checado o saldo total do banco, esteja com os valores corretos.
-            */
-            #endregion
-
-            string nome = ""; 
-
             Console.Write("\nDigite o nome do usuário que deseja manipular a conta: ");
-            nome = Console.ReadLine();
+            string nome = Console.ReadLine();
 
             foreach (Usuario p in usuarios)
             {
-                if (p.nome == nome)
+                if (p.Nome == nome)
                 {
-                    saldoUsuario = p.saldo;
+                    // Variavel global saldoUsuario vai receber o valor atual da conta do usuário
+                    saldoUsuario = p.Saldo;
+
+                    // Sub menu para usuário sacar o dinheiro ou depositar
                     MenuManusearConta();
 
-                    p.saldo = saldoUsuario;
+                    // Depois que usuário depositou ou sacou, vou atualizar novamente o saldo do usuário
+                    p.Saldo = saldoUsuario;
                 }
                 else
                 {
@@ -354,9 +366,6 @@ namespace ByteBank
                     Console.ResetColor();
                 }
             }
-
-
-
         }
 
         // # Case 6 - SubMenu para manipular a conta
@@ -387,7 +396,7 @@ namespace ByteBank
         // # Case 6 - Realizar Saque
         public static void RealizarSaque(double qtdSacar)
         {
-            if(qtdSacar > saldoUsuario)
+            if (qtdSacar > saldoUsuario)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Não é possivel sacar, pois você não tem esse valor em conta");
