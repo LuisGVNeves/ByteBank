@@ -24,7 +24,8 @@ namespace byteBank
             string respostaUsuario = Console.ReadLine().ToUpper();
             if (respostaUsuario == "SIM")
             {
-                Banco.CriarUsuario();
+                Console.Clear();
+                MostrarMenuPrincipal();
             }
             else
             {
@@ -67,6 +68,8 @@ namespace byteBank
             Console.Write("\n                        Digite a opção desejada: ");
         }
 
+        // Variável para fazer contagem de quantas contas possuem no banco, se atingir limite, usuário não consegue criar mais conta
+        public static int contadorUsuarios = 1;
 
         public static void Main(string[] args)
         {
@@ -76,15 +79,33 @@ namespace byteBank
             int escolhaUsuario;
             do
             {
-                // # Método que mostra o menu principal ao usuário
-                MostrarMenuPrincipal();
-
                 escolhaUsuario = int.Parse(Console.ReadLine());
 
                 switch (escolhaUsuario)
                 {
                     case 1:
-                        Banco.CriarUsuario();
+                        if(contadorUsuarios == 1)
+                        {
+                            Banco.CriarPrimeiroUsuario();
+                            contadorUsuarios++;
+                        }
+                        else if (contadorUsuarios == 2)
+                        {
+                            Banco.CriarSegundoUsuario();
+                            contadorUsuarios++;
+                        }
+                        else if(contadorUsuarios == 3)
+                        {
+                            Banco.CriarTerceiroUsuario();
+                            contadorUsuarios++;
+                        }
+                        else
+                        {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine("\nLimite de conta para um usuário atingido !");
+                            Console.ResetColor();
+                            Usuario.LimparTerminal();
+                        }
                         break;
                     case 2:
                         string cpf = "";

@@ -1,4 +1,5 @@
-﻿using ClasseBanco;
+﻿using byteBank;
+using ClasseBanco;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -23,11 +24,15 @@ namespace Usuarios
         public Usuario(string nome, string cpf, int idade, double saldo, string senha)
         {
             this.Nome = nome;
+            this.Cpf = cpf;
             this.Idade = idade;
             this.Saldo = saldo;
-            this.Cpf = cpf;
             this.Senha = senha;
         }
+
+
+
+
         // # Método para limpar o terminal
         public static void LimparTerminal()
         {
@@ -35,22 +40,16 @@ namespace Usuarios
 
             Console.Write("\nDeseja limpar a tela? SIM ou NÃO: ");
             string perguntaUsuario = Console.ReadLine().ToUpper();
-
-            while (perguntaUsuario != "SIM")
-            {
-                System.Threading.Thread.Sleep(2000);
-                Console.Write("Deseja limpar a tela? SIM ou NÃO: ");
-                perguntaUsuario = Console.ReadLine().ToUpper();
-            }
-
             if (perguntaUsuario == "SIM")
             {
                 // # Pausa antes do clear
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.WriteLine("--- Limpando ---");
                 Console.ResetColor();
-                System.Threading.Thread.Sleep(1000);
+                System.Threading.Thread.Sleep(500);
                 Console.Clear();
+                
+                Program.MostrarMenuPrincipal();
             }
         }
 

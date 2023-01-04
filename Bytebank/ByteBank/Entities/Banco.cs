@@ -12,68 +12,114 @@ namespace ClasseBanco
 {
     internal class Banco
     {
-        // # Lista para guardar usuarios
-        public static ArrayList usuarios = new ArrayList();
-
         // Variavel global para manipular os métodos de saque e deposito
         public static double saldoUsuario = 0.0;
 
-        // # Case 1 Método criar usuario no banco
-        public static void CriarUsuario()
+        // # Lista para guardar usuarios
+        public static List<Usuario> usuarios = new List<Usuario>();
+
+        // # Usuarios do banco
+        public static Usuario usuario1 = new Usuario("", "", 0, 0, "");
+        public static Usuario usuario2 = new Usuario("", "", 0, 0, "");
+        public static Usuario usuario3 = new Usuario("", "", 0, 0, "");
+
+
+        public static void CriarPrimeiroUsuario()
         {
-            // # Instanciando objeto novoUsuario da classe Usuario
-            Usuario novoUsuario = new Usuario("", "", 0, 0, "");
+            Console.Write("\nDigite o nome completo do usuário: ");
+            usuario1.Nome = Console.ReadLine();
 
-            while (true)
-            {
-                Console.Write("\nDigite o nome completo do usuário: ");
-                novoUsuario.Nome = Console.ReadLine();
-                
-                Console.Write("Digite a idade do usuario: ");
-                novoUsuario.Idade = int.Parse(Console.ReadLine());
+            Console.Write("Digite a idade do usuario: ");
+            usuario1.Idade = int.Parse(Console.ReadLine());
 
-                Console.Write("Digite o CPF do usuario: ");
-                novoUsuario.Cpf = Console.ReadLine();
+            Console.Write("Digite o CPF do usuario: ");
+            usuario1.Cpf = Console.ReadLine();
 
-                Console.Write("Digite o saldo do usuario: ");
-                novoUsuario.Saldo = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
-                Console.WriteLine("\n");
+            Console.Write("Digite o saldo do usuario: ");
+            usuario1.Saldo = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
+            Console.WriteLine("\n");
 
-                Console.Write("Digite a senha do usuario: ");
-                novoUsuario.Senha = Console.ReadLine();
-                Console.WriteLine("\n");
+            Console.Write("Digite a senha do usuario: ");
+            usuario1.Senha = Console.ReadLine();
+            Console.WriteLine("\n");
 
-                usuarios.Add(novoUsuario);
+            // Adicionando usuário a lista
+            usuarios.Add(usuario1);
 
-                // # Mensagem de sucesso
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine("Usuário criado com sucesso !");
-                Console.ResetColor();
+            // # Mensagem de sucesso
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("Usuário criado com sucesso !");
+            Console.ResetColor();
 
-                // # Se na contagem do array já tiver pelo menos 1 usuário, eu posso mostrar a msg de criar um novo usuario
-                if(usuarios.Count > 1)
-                {
-                     Console.Write("\n\nDeseja criar um novo usuário? Sim ou NÃO: ");
-                    
-                    string novaEscolhaUsuario = Console.ReadLine().ToUpper();
-                    if (novaEscolhaUsuario == "NÃO" || novaEscolhaUsuario == "NAO")
-                    {
-                        System.Threading.Thread.Sleep(1500);
-                        Console.Clear();
-                        break;
-                    }
-                }
-                else
-                {
-                    System.Threading.Thread.Sleep(1500);
-                    Console.Clear();
-                    break;
-                }
-
-
-            }
-
+            System.Threading.Thread.Sleep(700);
+            Console.Clear();
+            Program.MostrarMenuPrincipal();
         }
+        public static void CriarSegundoUsuario()
+        {
+            // Primeiro Usuario
+            Console.Write("\nDigite o nome completo do usuário: ");
+            usuario2.Nome = Console.ReadLine();
+
+            Console.Write("Digite a idade do usuario: ");
+            usuario2.Idade = int.Parse(Console.ReadLine());
+
+            Console.Write("Digite o CPF do usuario: ");
+            usuario2.Cpf = Console.ReadLine();
+
+            Console.Write("Digite o saldo do usuario: ");
+            usuario2.Saldo = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
+            Console.WriteLine("\n");
+
+            Console.Write("Digite a senha do usuario: ");
+            usuario2.Senha = Console.ReadLine();
+            Console.WriteLine("\n");
+
+            // Adicionando usuário a lista
+            usuarios.Add(usuario2);
+
+            // # Mensagem de sucesso
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("Usuário criado com sucesso !");
+            Console.ResetColor();
+
+            System.Threading.Thread.Sleep(700);
+            Console.Clear();
+            Program.MostrarMenuPrincipal();
+        }
+        public static void CriarTerceiroUsuario()
+        {
+            // Primeiro Usuario
+            Console.Write("\nDigite o nome completo do usuário: ");
+            usuario3.Nome = Console.ReadLine();
+
+            Console.Write("Digite a idade do usuario: ");
+            usuario3.Idade = int.Parse(Console.ReadLine());
+
+            Console.Write("Digite o CPF do usuario: ");
+            usuario3.Cpf = Console.ReadLine();
+
+            Console.Write("Digite o saldo do usuario: ");
+            usuario3.Saldo = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
+            Console.WriteLine("\n");
+
+            Console.Write("Digite a senha do usuario: ");
+            usuario3.Senha = Console.ReadLine();
+            Console.WriteLine("\n");
+
+            // Adicionando usuário a lista
+            usuarios.Add(usuario3);
+
+            // # Mensagem de sucesso
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("Usuário criado com sucesso !");
+            Console.ResetColor();
+
+            System.Threading.Thread.Sleep(700);
+            Console.Clear();
+            Program.MostrarMenuPrincipal();
+        }
+
 
         // # Case 2 Método para deletar usuario no banco
         public static void DeletarUsuario(string cpf)
@@ -140,9 +186,13 @@ namespace ClasseBanco
             Console.WriteLine("\n\n***LISTA DE USUÁRIOS BYTEBANK***");
             Console.ResetColor();
 
-            foreach (Usuario p in usuarios)
+            for (int i = 0; i < usuarios.Count(); i++)
             {
-                Console.Write($"\n\nNome: {p.Nome}\nIdade: {p.Idade}\nSaldo: R${p.Saldo.ToString("F2", CultureInfo.InvariantCulture)}\nCPF:{p.Cpf}\n");
+                Console.Write($"\n\n" +
+                    $"Nome: {usuarios[i].Nome}" +
+                    $"\nIdade: {usuarios[i].Idade}" +
+                    $"\nSaldo: R${usuarios[i].Saldo.ToString("F2", CultureInfo.InvariantCulture)}" +
+                    $"\nCPF:{usuarios[i].Cpf}\n");
             }
             Console.WriteLine("\n\n\n");
 
@@ -152,45 +202,46 @@ namespace ClasseBanco
         // # Case 4 Método que mostra o saldo total no banco
         public static void MostrarSaldoTotalBanco()
         {
-            string nome = "";
             Console.Write("\nDigite o nome completo do usuário para checar saldo total da conta: ");
-            nome = Console.ReadLine();
+            string nome = Console.ReadLine();
 
-            foreach (Usuario usuario in usuarios)
+            Console.Write("\nDigite a senha do do usuário para checar saldo total da conta: ");
+            string senha = Console.ReadLine();
+
+            // Percorrer a lista dos usuários aqui tava gerando um bug de pular o usuário e cair direto no else, então resolvi colocar só no if e separar os usuários.
+            if (usuario1.Nome == nome && usuario1.Senha == senha)
             {
-                try
-                {
-                    if(nome == usuario.Nome)
-                    {
-                        Console.ForegroundColor = ConsoleColor.Green;
-                        Console.WriteLine($"\nSaldo total no banco: R$ {usuario.Saldo.ToString("F2", CultureInfo.InvariantCulture)}");
-                        Console.ResetColor();
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine($"\nSaldo total no banco: R$ {usuario1.Saldo.ToString("F2", CultureInfo.InvariantCulture)}");
+                Console.ResetColor();
 
-                        Usuario.LimparTerminal();
-                        break;
-                    }
-                    else
-                    {
-                        System.Threading.Thread.Sleep(1000);
-                        Console.Clear();
-                        
-                        Console.ForegroundColor = ConsoleColor.DarkGreen;
-                        Console.WriteLine("Procurando usuário.. \n");
-                        Console.ResetColor();
-
-                        System.Threading.Thread.Sleep(1000);
-                        Console.Clear();
-                    }
-                }
-                catch
-                {
-                    if (nome != usuario.Nome)
-                    {
-                        Usuario.LimparTerminal();
-                        break;
-                    }
-                }
+                Usuario.LimparTerminal();
             }
+            else if(usuario2.Nome == nome && usuario2.Senha == senha)
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine($"\nSaldo total no banco: R$ {usuario2.Saldo.ToString("F2", CultureInfo.InvariantCulture)}");
+                Console.ResetColor();
+
+                Usuario.LimparTerminal();
+            }
+            else if (usuario3.Nome == nome && usuario3.Senha == senha)
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine($"\nSaldo total no banco: R$ {usuario3.Saldo.ToString("F2", CultureInfo.InvariantCulture)}");
+                Console.ResetColor();
+
+                Usuario.LimparTerminal();
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("USUÁRIO NÃO ENCONTRADO\n");
+                Console.ResetColor();
+
+                Usuario.LimparTerminal();
+            }
+
         }
 
         // # Case 5 Método que mostra detalhes de usuário
@@ -203,16 +254,25 @@ namespace ClasseBanco
             Console.Write("\nDigite o nome do usuário para checar as informações: ");
             string nome = Console.ReadLine();
 
-            foreach (Usuario p in usuarios)
+            if (usuario1.Nome == nome)
             {
-                if (p.Nome == nome)
-                {
-                    Console.Write($"\nNome: {p.Nome}\nIdade: {p.Idade}\nSaldo: {p.Saldo}\nCPF:{p.Cpf}");
-                }
+                Console.Write($"\nNome: {usuario1.Nome}\nIdade: {usuario1.Idade}\nSaldo: {usuario1.Saldo}\nCPF:{usuario1.Cpf}");
+            }
+            else if (usuario2.Nome == nome)
+            {
+                Console.Write($"\nNome: {usuario2.Nome}\nIdade: {usuario2.Idade}\nSaldo: {usuario2.Saldo}\nCPF:{usuario2.Cpf}");
+            }
+            else if (usuario3.Nome == nome)
+            {
+                Console.Write($"\nNome: {usuario3.Nome}\nIdade: {usuario3.Idade}\nSaldo: {usuario3.Saldo}\nCPF:{usuario3.Cpf}");
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("USUÁRIO NÃO ENCONTRADO\n");
+                Console.ResetColor();
             }
             Console.WriteLine("\n\n");
-
-
             Usuario.LimparTerminal();
         }
 
@@ -230,20 +290,47 @@ namespace ClasseBanco
         {
             Console.Write("\nDigite o nome do usuário que deseja manipular a conta: ");
             string nome = Console.ReadLine();
-
-            foreach (Usuario p in usuarios)
+            if (usuario1.Nome == nome)
             {
-                if (p.Nome == nome)
-                {
-                    // Variavel global saldoUsuario vai receber o valor atual da conta do usuário
-                    saldoUsuario = p.Saldo;
+                // Variavel global saldoUsuario vai receber o valor atual da conta do usuário
+                saldoUsuario = usuario1.Saldo;
 
-                    // Sub menu para usuário sacar o dinheiro ou depositar
-                    MenuManusearConta();
+                // Sub menu para usuário sacar o dinheiro ou depositar
+                MenuManusearConta();
 
-                    // Depois que usuário depositou ou sacou, vou atualizar novamente o saldo do usuário
-                    p.Saldo = saldoUsuario;
-                }
+                // Depois que usuário depositou ou sacou, vou atualizar novamente o saldo do usuário
+                usuario1.Saldo = saldoUsuario;
+            }
+            else if (usuario2.Nome == nome)
+            {
+                // Variavel global saldoUsuario vai receber o valor atual da conta do usuário
+                saldoUsuario = usuario2.Saldo;
+
+                // Sub menu para usuário sacar o dinheiro ou depositar
+                MenuManusearConta();
+
+                // Depois que usuário depositou ou sacou, vou atualizar novamente o saldo do usuário
+                usuario2.Saldo = saldoUsuario;
+            }
+            else if (usuario3.Nome == nome)
+            {
+                // Variavel global saldoUsuario vai receber o valor atual da conta do usuário
+                saldoUsuario = usuario3.Saldo;
+
+                // Sub menu para usuário sacar o dinheiro ou depositar
+                MenuManusearConta();
+
+                // Depois que usuário depositou ou sacou, vou atualizar novamente o saldo do usuário
+                usuario3.Saldo = saldoUsuario;
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("USUÁRIO NÃO ENCONTRADO\n");
+                Console.ResetColor();
+
+                System.Threading.Thread.Sleep(1000);
+                Usuario.LimparTerminal();
             }
         }
 
@@ -329,5 +416,30 @@ namespace ClasseBanco
 
         }
 
+
+        /* # Case 7 - Realizar Transferencia
+        public static void RealizarTransferencia(double qtdTransferencia)
+        {
+            if (qtdDeposito > 0)
+            {
+                saldoUsuario += qtdDeposito;
+
+                Console.WriteLine($"\nValor depositado: {qtdDeposito.ToString("F2", CultureInfo.InvariantCulture)}\n");
+                Console.WriteLine($"Valor atual da conta: {saldoUsuario.ToString("F2", CultureInfo.InvariantCulture)}\n");
+
+                Usuario.LimparTerminal();
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("\nNão é possível depositar, pois o valor do deposito é R$ 0.00");
+                Console.ResetColor();
+                Console.WriteLine($"\nValor atual da conta: {saldoUsuario.ToString("F2", CultureInfo.InvariantCulture)}\n");
+
+                Usuario.LimparTerminal();
+            }
+
+        }
+        */
     }
 }
