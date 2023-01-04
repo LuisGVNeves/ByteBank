@@ -33,7 +33,7 @@ namespace byteBank
                 Console.ResetColor();
 
                 string novaResposta = Console.ReadLine().ToUpper();
-                if(novaResposta != "SIM")
+                if (novaResposta != "SIM")
                 {
                     Console.Clear();
                     MostrarMenuPrincipal();
@@ -100,20 +100,20 @@ namespace byteBank
                 switch (escolhaUsuario)
                 {
                     case 1:
-                        if(contadorUsuarios == 1)
+                        if (contadorUsuarios == 1)
                         {
-                            Banco.CriarPrimeiroUsuario();
-                            contadorUsuarios++;
+                            Usuario.CriarUsuario(Usuario.nome, Usuario.idade, Usuario.saldo, Usuario.cpf, Usuario.senha);
+                            contadorUsuarios = 2;
                         }
                         else if (contadorUsuarios == 2)
                         {
-                            Banco.CriarSegundoUsuario();
-                            contadorUsuarios++;
+                            Usuario.CriarUsuario(Usuario.nome, Usuario.idade, Usuario.saldo, Usuario.cpf, Usuario.senha);
+                            contadorUsuarios = 3;
                         }
-                        else if(contadorUsuarios == 3)
+                        else if (contadorUsuarios == 3)
                         {
-                            Banco.CriarTerceiroUsuario();
-                            contadorUsuarios++;
+                            Usuario.CriarUsuario(Usuario.nome, Usuario.idade, Usuario.saldo, Usuario.cpf, Usuario.senha);
+                            contadorUsuarios = 4;
                         }
                         else
                         {
@@ -124,19 +124,19 @@ namespace byteBank
                         }
                         break;
                     case 2:
-                        Banco.DeletarUsuario();
+                        Usuario.DeletarUsuario(Usuario.nome, Usuario.idade, Usuario.saldo, Usuario.cpf, Usuario.senha);
                         break;
                     case 3:
-                        Banco.ListarTodosUsuariosDoBanco();
+                        Usuario.ListarTodosUsuariosDoBanco(Usuario.nome, Usuario.cpf, Usuario.saldo, Usuario.idade);
                         break;
                     case 4:
-                        Banco.MostrarSaldoTotalBanco();
+                        Usuario.MostrarSaldoTotalBanco(Usuario.nome, Usuario.saldo, Usuario.senha);
                         break;
                     case 5:
-                        Banco.DetalhesUsuario();
+                        Usuario.DetalhesUsuario(Usuario.nome, Usuario.saldo, Usuario.idade);
                         break;
                     case 6:
-                        Banco.ManipularConta();
+                        Banco.ManipularConta(Usuario.nome, Usuario.idade, Usuario.saldo, Usuario.cpf, Usuario.senha);
                         break;
                     default:
                         Console.ForegroundColor = ConsoleColor.Red;
