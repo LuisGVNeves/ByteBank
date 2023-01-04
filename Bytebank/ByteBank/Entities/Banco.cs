@@ -473,6 +473,15 @@ namespace ClasseBanco
                     // Depois que usuário sacou, vou atualizar novamente o saldo do usuário
                     usuario3.Saldo = saldoUsuario;
                 }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("\nUSUÁRIO NÃO ENCONTRADO");
+                    Console.ResetColor();
+
+                    System.Threading.Thread.Sleep(1000);
+                    Usuario.LimparTerminal();
+                }
             }
 
             static void RealizarDeposito(double qtdDeposito)
@@ -561,11 +570,21 @@ namespace ClasseBanco
                     // Depois que usuário sacou, vou atualizar novamente o saldo do usuário
                     usuario3.Saldo = saldoUsuario;
                 }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("\nUSUÁRIO NÃO ENCONTRADO");
+                    Console.ResetColor();
+
+                    System.Threading.Thread.Sleep(1000);
+                    Usuario.LimparTerminal();
+                }
 
             }
            
             static void RealizarTransferencia(double qtdTransferencia)
             {
+                // Variaveis temporárias pra alocar o saldo da propriedade do usuário e atualizar depois
                 double saldoUsuario1 = 0.0;
                 double saldoUsuario2 = 0.0;
                 double saldoUsuario3 = 0.0;
@@ -580,7 +599,7 @@ namespace ClasseBanco
                     saldoUsuario2 = usuario2.Saldo;
                     saldoUsuario3 = usuario3.Saldo;
 
-                    // colocar saldo usuario
+                    // Processamento de dados - Variavel saldo vai alocar temporariamente os novos valores e depois vai reatribuir para o atributo saldo do objeto usuario
                     if (qtdTransferencia > 0 && qtdTransferencia <= saldoUsuario1)
                     {
                         Console.Write("\nDigite o nome do usuário que vai receber a transferência: ");
@@ -612,6 +631,15 @@ namespace ClasseBanco
                         {
                             Console.ForegroundColor = ConsoleColor.Red;
                             Console.WriteLine("\nNão é possível transferir pro mesmo usuário !");
+                            Console.ResetColor();
+
+                            System.Threading.Thread.Sleep(1000);
+                            Usuario.LimparTerminal();
+                        }
+                        else
+                        {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine("\nUSUÁRIO NÃO ENCONTRADO");
                             Console.ResetColor();
 
                             System.Threading.Thread.Sleep(1000);
@@ -684,6 +712,15 @@ namespace ClasseBanco
                             System.Threading.Thread.Sleep(1000);
                             Usuario.LimparTerminal();
                         }
+                        else
+                        {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine("\nUSUÁRIO NÃO ENCONTRADO");
+                            Console.ResetColor();
+
+                            System.Threading.Thread.Sleep(1000);
+                            Usuario.LimparTerminal();
+                        }
                     }
                     else if(qtdTransferencia <= 0)
                     {
@@ -745,6 +782,15 @@ namespace ClasseBanco
                         {
                             Console.ForegroundColor = ConsoleColor.Red;
                             Console.WriteLine("\nNão é possível transferir pro mesmo usuário !");
+                            Console.ResetColor();
+
+                            System.Threading.Thread.Sleep(1000);
+                            Usuario.LimparTerminal();
+                        }
+                        else
+                        {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine("\nUSUÁRIO NÃO ENCONTRADO");
                             Console.ResetColor();
 
                             System.Threading.Thread.Sleep(1000);

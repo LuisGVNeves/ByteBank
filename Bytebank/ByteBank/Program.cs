@@ -20,7 +20,7 @@ namespace byteBank
             Console.ResetColor();
             Console.WriteLine("ByteBank é um banco terminal feito em C#, com conhecimentos aprendidos");
             Console.WriteLine("na escola Imã Learning Place.");
-            Console.Write("\n\nDeseja iniciar um cadastro? SIM ou NÃO: ");
+            Console.Write("\n\nDeseja iniciar o ByteBank SIM ou NÃO: ");
             string respostaUsuario = Console.ReadLine().ToUpper();
             if (respostaUsuario == "SIM")
             {
@@ -30,9 +30,22 @@ namespace byteBank
             else
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("-------------------------- Encerrando programa --------------------------");
+                Console.Write("Deseja realmente sair? ");
                 Console.ResetColor();
-                Environment.Exit(0);
+
+                string novaResposta = Console.ReadLine().ToUpper();
+                if(novaResposta != "SIM")
+                {
+                    Console.Clear();
+                    MostrarMenuPrincipal();
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("-------------------------- Encerrando programa --------------------------");
+                    Console.ResetColor();
+                    Environment.Exit(0);
+                }
             }
         }
 
@@ -45,7 +58,7 @@ namespace byteBank
             Console.WriteLine("-------------------------- INTERFACE BYTEBANK --------------------------");
             Console.ResetColor();
 
-            Console.WriteLine("\n                        1 - Inserir novo usuário");
+            Console.WriteLine("\n                        1 - Cadastrar novo usuário");
 
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("                        2 - Deletar um usuário");
@@ -73,7 +86,6 @@ namespace byteBank
 
         public static void Main(string[] args)
         {
-
             // # Menu inicial pro usuário
             MenuInicial();
 
@@ -125,7 +137,7 @@ namespace byteBank
                         break;
                     default:
                         Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("-------------------------- Encerrando programa --------------------------");
+                        Console.WriteLine("-------------------------- Encerrando BYTEBANK --------------------------");
                         Console.ResetColor();
                         break;
                 }
