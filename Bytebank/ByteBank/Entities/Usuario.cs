@@ -18,7 +18,6 @@ namespace Usuarios
         public double Saldo;
         public string Cpf;
         public string Senha;
-        public int Id;
 
         // # Constructor
         public Usuario(string nome, string cpf, int idade, double saldo, string senha)
@@ -31,8 +30,6 @@ namespace Usuarios
         }
 
 
-
-
         // # Método para limpar o terminal
         public static void LimparTerminal()
         {
@@ -40,9 +37,9 @@ namespace Usuarios
 
             Console.Write("\nDeseja limpar a tela? SIM ou NÃO: ");
             string perguntaUsuario = Console.ReadLine().ToUpper();
-            if (perguntaUsuario == "SIM")
+
+            if(perguntaUsuario == "SIM")
             {
-                // # Pausa antes do clear
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.WriteLine("--- Limpando ---");
                 Console.ResetColor();

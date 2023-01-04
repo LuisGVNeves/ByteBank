@@ -9,10 +9,10 @@ namespace byteBank
 {
     class Program
     {
-
         // # Método para mostrar o menu inicial
         public static void MenuInicial()
         {
+           
             // # Boas vindas do banco
             Console.BackgroundColor = ConsoleColor.Red;
             Console.ForegroundColor = ConsoleColor.Black;
@@ -73,6 +73,7 @@ namespace byteBank
 
         public static void Main(string[] args)
         {
+
             // # Menu inicial pro usuário
             MenuInicial();
 

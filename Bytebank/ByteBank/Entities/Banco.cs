@@ -23,7 +23,6 @@ namespace ClasseBanco
         public static Usuario usuario2 = new Usuario("", "", 0, 0, "");
         public static Usuario usuario3 = new Usuario("", "", 0, 0, "");
 
-
         public static void CriarPrimeiroUsuario()
         {
             Console.Write("\nDigite o nome completo do usuário: ");
@@ -331,169 +330,466 @@ namespace ClasseBanco
         }
 
         // # Case 6 Método para manipular a conta do usuário
-        #region Comentário explicando a função ManipularConta
-        /*
-        - Vai percorrer a lista de usuários e se achar o nome, vai pegar a variavel global saldoUsuario e
-        essa vai receber o valor do saldo atual do usuário
-        - Depois vai chamar o MENU para manusear a conta, então usuario pode depositar ou sacar, 
-        depois que o usuário fazer um desses dois, eu atualizo a propriedade saldo.
-        - Oara quando for checado o saldo total do banco, esteja com os valores atualizados.
-        */
-        #endregion
         public static void ManipularConta()
         {
-            Console.Write("\nDigite o nome do usuário que deseja manipular a conta: ");
-            string nome = Console.ReadLine();
-            if (usuario1.Nome == nome)
-            {
-                // Variavel global saldoUsuario vai receber o valor atual da conta do usuário
-                saldoUsuario = usuario1.Saldo;
-
-                // Sub menu para usuário sacar o dinheiro ou depositar
-                MenuManusearConta();
-
-                // Depois que usuário depositou ou sacou, vou atualizar novamente o saldo do usuário
-                usuario1.Saldo = saldoUsuario;
-            }
-            else if (usuario2.Nome == nome)
-            {
-                // Variavel global saldoUsuario vai receber o valor atual da conta do usuário
-                saldoUsuario = usuario2.Saldo;
-
-                // Sub menu para usuário sacar o dinheiro ou depositar
-                MenuManusearConta();
-
-                // Depois que usuário depositou ou sacou, vou atualizar novamente o saldo do usuário
-                usuario2.Saldo = saldoUsuario;
-            }
-            else if (usuario3.Nome == nome)
-            {
-                // Variavel global saldoUsuario vai receber o valor atual da conta do usuário
-                saldoUsuario = usuario3.Saldo;
-
-                // Sub menu para usuário sacar o dinheiro ou depositar
-                MenuManusearConta();
-
-                // Depois que usuário depositou ou sacou, vou atualizar novamente o saldo do usuário
-                usuario3.Saldo = saldoUsuario;
-            }
-            else
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("USUÁRIO NÃO ENCONTRADO\n");
-                Console.ResetColor();
-
-                System.Threading.Thread.Sleep(1000);
-                Usuario.LimparTerminal();
-            }
-        }
-
-        // # Case 6 - SubMenu para manipular a conta
-        public static void MenuManusearConta()
-        {
+            Console.WriteLine("\n[ AREA TRANSFERENCIA ]\n");
             Console.WriteLine("\n1 - Fazer Saque");
             Console.WriteLine("2 - Depositar");
+            Console.WriteLine("3 - Realizar Transferência");
             Console.Write("\nDigite a opção desejada: ");
 
             int respostaUsuario = int.Parse(Console.ReadLine());
+            switch (respostaUsuario)
+            {
+                case 1:
+                    Console.Write("\nDigite o valor a sacar: ");
+                    double valorSaque = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
+                    RealizarSaque(valorSaque);
+                    break;
+                case 2:
+                    Console.Write("\nDigite o valor a depositar: ");
+                    double valorDepositado = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
+                    RealizarDeposito(valorDepositado);
+                    break;
 
-            if (respostaUsuario == 1)
-            {
-                Console.Write("\nDigite o valor a sacar: ");
-                double valorSaque = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
-                RealizarSaque(valorSaque);
+                case 3:
+                    Console.Write("\nDigite o valor a transferir: ");
+                    double valorTransferido = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
+                    RealizarTransferencia(valorTransferido);
+                    break;
             }
-            if (respostaUsuario == 2)
+
+
+            static void RealizarSaque(double qtdSacar)
             {
-                Console.Write("\nDigite o valor a depositar: ");
-                double valorDepositado = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
-                RealizarDeposito(valorDepositado);
+                Console.Write("\nDigite o nome do usuário que deseja realizar Saque: ");
+                string nome = Console.ReadLine();
+
+                if (usuario1.Nome == nome)
+                {
+                    // Variavel global saldoUsuario vai receber o valor atual da conta do usuário
+                    saldoUsuario = usuario1.Saldo;
+
+                    if (qtdSacar > saldoUsuario)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("Não é possivel sacar, pois você não tem esse valor em conta");
+                        Console.ResetColor();
+                        Console.WriteLine($"Valor atual da conta: {saldoUsuario.ToString("F2", CultureInfo.InvariantCulture)}\n");
+
+                        Usuario.LimparTerminal();
+                    }
+                    else if (saldoUsuario > 0)
+                    {
+                        saldoUsuario -= qtdSacar;
+
+                        Console.WriteLine($"\nValor sacado: {qtdSacar.ToString("F2", CultureInfo.InvariantCulture)}\n");
+                        Console.WriteLine($"Valor atual da conta: {saldoUsuario.ToString("F2", CultureInfo.InvariantCulture)}\n");
+
+                        Usuario.LimparTerminal();
+                    }
+                    else
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("Não é possível sacar, pois o saldo da conta é R$ 0.00");
+                        Console.ResetColor();
+                        Console.WriteLine($"Valor atual da conta: {saldoUsuario.ToString("F2", CultureInfo.InvariantCulture)}\n");
+
+                        Usuario.LimparTerminal();
+                    }
+
+                    // Depois que usuário sacou, vou atualizar novamente o saldo do usuário
+                    usuario1.Saldo = saldoUsuario;
+                }
+                else if (usuario2.Nome == nome)
+                {
+                    // Variavel global saldoUsuario vai receber o valor atual da conta do usuário
+                    saldoUsuario = usuario2.Saldo;
+
+                    if (qtdSacar > saldoUsuario)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("Não é possivel sacar, pois você não tem esse valor em conta");
+                        Console.ResetColor();
+                        Console.WriteLine($"Valor atual da conta: {saldoUsuario.ToString("F2", CultureInfo.InvariantCulture)}\n");
+
+                        Usuario.LimparTerminal();
+                    }
+                    else if (saldoUsuario > 0)
+                    {
+                        saldoUsuario -= qtdSacar;
+
+                        Console.WriteLine($"\nValor sacado: {qtdSacar.ToString("F2", CultureInfo.InvariantCulture)}\n");
+                        Console.WriteLine($"Valor atual da conta: {saldoUsuario.ToString("F2", CultureInfo.InvariantCulture)}\n");
+
+                        Usuario.LimparTerminal();
+                    }
+                    else
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("Não é possível sacar, pois o saldo da conta é R$ 0.00");
+                        Console.ResetColor();
+                        Console.WriteLine($"Valor atual da conta: {saldoUsuario.ToString("F2", CultureInfo.InvariantCulture)}\n");
+
+                        Usuario.LimparTerminal();
+                    }
+
+                    // Depois que usuário sacou, vou atualizar novamente o saldo do usuário
+                    usuario2.Saldo = saldoUsuario;
+                }
+                else if (usuario3.Nome == nome)
+                {
+                    // Variavel global saldoUsuario vai receber o valor atual da conta do usuário
+                    saldoUsuario = usuario3.Saldo;
+
+                    if (qtdSacar > saldoUsuario)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("Não é possivel sacar, pois você não tem esse valor em conta");
+                        Console.ResetColor();
+                        Console.WriteLine($"Valor atual da conta: {saldoUsuario.ToString("F2", CultureInfo.InvariantCulture)}\n");
+
+                        Usuario.LimparTerminal();
+                    }
+                    else if (saldoUsuario > 0)
+                    {
+                        saldoUsuario -= qtdSacar;
+
+                        Console.WriteLine($"\nValor sacado: {qtdSacar.ToString("F2", CultureInfo.InvariantCulture)}\n");
+                        Console.WriteLine($"Valor atual da conta: {saldoUsuario.ToString("F2", CultureInfo.InvariantCulture)}\n");
+
+                        Usuario.LimparTerminal();
+                    }
+                    else
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("Não é possível sacar, pois o saldo da conta é R$ 0.00");
+                        Console.ResetColor();
+                        Console.WriteLine($"Valor atual da conta: {saldoUsuario.ToString("F2", CultureInfo.InvariantCulture)}\n");
+
+                        Usuario.LimparTerminal();
+                    }
+
+                    // Depois que usuário sacou, vou atualizar novamente o saldo do usuário
+                    usuario3.Saldo = saldoUsuario;
+                }
+            }
+
+            static void RealizarDeposito(double qtdDeposito)
+            {
+                Console.Write("\nDigite o nome do usuário que deseja realizar o deposito: ");
+                string nome = Console.ReadLine();
+
+                if (usuario1.Nome == nome)
+                {
+                    // Variavel global saldoUsuario vai receber o valor atual da conta do usuário
+                    saldoUsuario = usuario1.Saldo;
+
+                    if (qtdDeposito > 0)
+                    {
+                        saldoUsuario += qtdDeposito;
+
+                        Console.WriteLine($"\nValor depositado: {qtdDeposito.ToString("F2", CultureInfo.InvariantCulture)}\n");
+                        Console.WriteLine($"Valor atual da conta: {saldoUsuario.ToString("F2", CultureInfo.InvariantCulture)}\n");
+
+                        Usuario.LimparTerminal();
+                    }
+                    else
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("\nNão é possível depositar, pois o valor do deposito é R$ 0.00");
+                        Console.ResetColor();
+                        Console.WriteLine($"\nValor atual da conta: {saldoUsuario.ToString("F2", CultureInfo.InvariantCulture)}\n");
+
+                        Usuario.LimparTerminal();
+                    }
+
+                    // Depois que usuário sacou, vou atualizar novamente o saldo do usuário
+                    usuario1.Saldo = saldoUsuario;
+                }
+                else if (usuario2.Nome == nome)
+                {
+                    // Variavel global saldoUsuario vai receber o valor atual da conta do usuário
+                    saldoUsuario = usuario2.Saldo;
+
+                    if (qtdDeposito > 0)
+                    {
+                        saldoUsuario += qtdDeposito;
+
+                        Console.WriteLine($"\nValor depositado: {qtdDeposito.ToString("F2", CultureInfo.InvariantCulture)}\n");
+                        Console.WriteLine($"Valor atual da conta: {saldoUsuario.ToString("F2", CultureInfo.InvariantCulture)}\n");
+
+                        Usuario.LimparTerminal();
+                    }
+                    else
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("\nNão é possível depositar, pois o valor do deposito é R$ 0.00");
+                        Console.ResetColor();
+                        Console.WriteLine($"\nValor atual da conta: {saldoUsuario.ToString("F2", CultureInfo.InvariantCulture)}\n");
+
+                        Usuario.LimparTerminal();
+                    }
+
+                    // Depois que usuário sacou, vou atualizar novamente o saldo do usuário
+                    usuario2.Saldo = saldoUsuario;
+                }
+                else if (usuario3.Nome == nome)
+                {
+                    // Variavel global saldoUsuario vai receber o valor atual da conta do usuário
+                    saldoUsuario = usuario3.Saldo;
+
+                    if (qtdDeposito > 0)
+                    {
+                        saldoUsuario += qtdDeposito;
+
+                        Console.WriteLine($"\nValor depositado: {qtdDeposito.ToString("F2", CultureInfo.InvariantCulture)}\n");
+                        Console.WriteLine($"Valor atual da conta: {saldoUsuario.ToString("F2", CultureInfo.InvariantCulture)}\n");
+
+                        Usuario.LimparTerminal();
+                    }
+                    else
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("\nNão é possível depositar, pois o valor do deposito é R$ 0.00");
+                        Console.ResetColor();
+                        Console.WriteLine($"\nValor atual da conta: {saldoUsuario.ToString("F2", CultureInfo.InvariantCulture)}\n");
+
+                        Usuario.LimparTerminal();
+                    }
+
+                    // Depois que usuário sacou, vou atualizar novamente o saldo do usuário
+                    usuario3.Saldo = saldoUsuario;
+                }
+
+            }
+           
+            static void RealizarTransferencia(double qtdTransferencia)
+            {
+                double saldoUsuario1 = 0.0;
+                double saldoUsuario2 = 0.0;
+                double saldoUsuario3 = 0.0;
+
+                Console.Write("\nNome do usuário que vai enviar a transferência: ");
+                string nome = Console.ReadLine();
+
+                if (usuario1.Nome == nome)
+                {
+                    // Variavel saldoUsuario1,2,3 vai receber o valor atual da conta do usuário
+                    saldoUsuario1 = usuario1.Saldo;
+                    saldoUsuario2 = usuario2.Saldo;
+                    saldoUsuario3 = usuario3.Saldo;
+
+                    // colocar saldo usuario
+                    if (qtdTransferencia > 0 && qtdTransferencia <= saldoUsuario1)
+                    {
+                        Console.Write("\nDigite o nome do usuário que vai receber a transferência: ");
+                        string usuarioReceberTransferencia = Console.ReadLine();
+
+                        if (usuarioReceberTransferencia == usuario2.Nome)
+                        {
+                            saldoUsuario1 -= qtdTransferencia;
+                            saldoUsuario2 += qtdTransferencia;
+
+                            Console.ForegroundColor = ConsoleColor.Green;
+                            Console.WriteLine("\nTransferência realizada com sucesso !");
+                            Console.ResetColor();
+                            System.Threading.Thread.Sleep(1000);
+                            Usuario.LimparTerminal();
+                        }
+                        else if (usuarioReceberTransferencia == usuario3.Nome)
+                        {
+                            saldoUsuario1 -= qtdTransferencia;
+                            saldoUsuario3 += qtdTransferencia;
+
+                            Console.ForegroundColor = ConsoleColor.Green;
+                            Console.WriteLine("\nTransferência realizada com sucesso !");
+                            Console.ResetColor();
+                            System.Threading.Thread.Sleep(1000);
+                            Usuario.LimparTerminal();
+                        }
+                        else if (usuarioReceberTransferencia == usuario1.Nome)
+                        {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine("\nNão é possível transferir pro mesmo usuário !");
+                            Console.ResetColor();
+
+                            System.Threading.Thread.Sleep(1000);
+                            Usuario.LimparTerminal();
+                        }
+                    }
+                    else if (qtdTransferencia <= 0)
+                    {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine("\nNão é possível enviar zero reais ou menos !");
+                            Console.ResetColor();
+
+                            System.Threading.Thread.Sleep(1000);
+                            Usuario.LimparTerminal();
+                    }
+                    else if(qtdTransferencia > saldoUsuario1)
+                    {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine("\nNão é possível enviar um valor maior do que há na sua conta!");
+                            Console.ResetColor();
+
+                            System.Threading.Thread.Sleep(1000);
+                            Usuario.LimparTerminal();
+                    }
+
+                    // Depois que usuário fez transferencia, vou atualizar novamente o saldo do usuário
+                    usuario1.Saldo = saldoUsuario1;
+                    usuario2.Saldo = saldoUsuario2;
+                    usuario3.Saldo = saldoUsuario3;
+                }
+                else if (usuario2.Nome == nome)
+                {
+                    saldoUsuario1 = usuario1.Saldo;
+                    saldoUsuario2 = usuario2.Saldo;
+                    saldoUsuario3 = usuario3.Saldo;
+
+                    if (qtdTransferencia > 0 && qtdTransferencia <= saldoUsuario2)
+                    {
+                        Console.Write("\nDigite o nome do usuário que vai receber a transferência: ");
+                        string usuarioReceberTransferencia = Console.ReadLine();
+
+                        if (usuarioReceberTransferencia == usuario1.Nome)
+                        {
+                            saldoUsuario2 -= qtdTransferencia;
+                            saldoUsuario1 += qtdTransferencia;
+
+                            Console.ForegroundColor = ConsoleColor.Green;
+                            Console.WriteLine("\nTransferência realizada com sucesso !");
+                            Console.ResetColor();
+                            System.Threading.Thread.Sleep(1000);
+                            Usuario.LimparTerminal(); ;
+                        }
+                        else if (usuarioReceberTransferencia == usuario3.Nome)
+                        {
+                            saldoUsuario2 -= qtdTransferencia;
+                            saldoUsuario3 += qtdTransferencia;
+
+                            Console.ForegroundColor = ConsoleColor.Green;
+                            Console.WriteLine("\nTransferência realizada com sucesso !");
+                            Console.ResetColor();
+                            System.Threading.Thread.Sleep(1000);
+                            Usuario.LimparTerminal();
+                        }
+                        else if (usuarioReceberTransferencia == usuario2.Nome)
+                        {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine("\nNão é possível transferir pro mesmo usuário !");
+                            Console.ResetColor();
+
+                            System.Threading.Thread.Sleep(1000);
+                            Usuario.LimparTerminal();
+                        }
+                    }
+                    else if(qtdTransferencia <= 0)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("\nNão é possível enviar zero reais ou menos !");
+                        Console.ResetColor();
+
+                        System.Threading.Thread.Sleep(1000);
+                        Usuario.LimparTerminal();
+                    }
+                    else if(qtdTransferencia > usuario2.Saldo)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("\nNão é possível enviar um valor maior do que há na sua conta!");
+                        Console.ResetColor();
+
+                        System.Threading.Thread.Sleep(1000);
+                        Usuario.LimparTerminal();
+                    }
+
+                    usuario1.Saldo = saldoUsuario1;
+                    usuario2.Saldo = saldoUsuario2;
+                    usuario3.Saldo = saldoUsuario3;
+                }
+                else if (nome == usuario3.Nome)
+                {
+                    saldoUsuario1 = usuario1.Saldo;
+                    saldoUsuario2 = usuario2.Saldo;
+                    saldoUsuario3 = usuario3.Saldo;
+
+                    if (qtdTransferencia > 0 && qtdTransferencia <= usuario3.Saldo)
+                    {
+                        Console.Write("\nDigite o nome do usuário que vai receber a transferência: ");
+                        string usuarioReceberTransferencia = Console.ReadLine();
+
+                        if (usuarioReceberTransferencia == usuario1.Nome)
+                        {
+                            saldoUsuario3 -= qtdTransferencia;
+                            saldoUsuario1 += qtdTransferencia;
+
+                            Console.ForegroundColor = ConsoleColor.Green;
+                            Console.WriteLine("\nTransferência realizada com sucesso !");
+                            Console.ResetColor();
+                            System.Threading.Thread.Sleep(1000);
+                            Usuario.LimparTerminal();
+                        }
+                        else if (usuarioReceberTransferencia == usuario2.Nome)
+                        {
+                            saldoUsuario3 -= qtdTransferencia;
+                            saldoUsuario2 += qtdTransferencia;
+
+                            Console.ForegroundColor = ConsoleColor.Green;
+                            Console.WriteLine("\nTransferência realizada com sucesso !");
+                            Console.ResetColor();
+                            System.Threading.Thread.Sleep(1000);
+                            Usuario.LimparTerminal();
+                        }
+                        else if (usuarioReceberTransferencia == usuario3.Nome)
+                        {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine("\nNão é possível transferir pro mesmo usuário !");
+                            Console.ResetColor();
+
+                            System.Threading.Thread.Sleep(1000);
+                            Usuario.LimparTerminal();
+                        }
+                    }
+                    else if (qtdTransferencia <= 0)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("\nNão é possível enviar zero reais ou menos !");
+                        Console.ResetColor();
+
+                        System.Threading.Thread.Sleep(1000);
+                        Usuario.LimparTerminal();
+                    }
+                    else if(qtdTransferencia > usuario3.Saldo)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("\nNão é possível enviar um valor maior do que há na sua conta!");
+                        Console.ResetColor();
+
+                        System.Threading.Thread.Sleep(1000);
+                        Usuario.LimparTerminal();
+                    }
+
+                    usuario1.Saldo = saldoUsuario1;
+                    usuario2.Saldo = saldoUsuario2;
+                    usuario3.Saldo = saldoUsuario3;
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("\n USUÁRIO NÃO ENCONTRADO !");
+                    Console.ResetColor();
+
+                    System.Threading.Thread.Sleep(1000);
+                    Usuario.LimparTerminal();
+                }
+
             }
 
 
         }
 
-        // # Case 6 - Realizar Saque
-        public static void RealizarSaque(double qtdSacar)
-        {
-            if (qtdSacar > saldoUsuario)
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Não é possivel sacar, pois você não tem esse valor em conta");
-                Console.ResetColor();
-                Console.WriteLine($"Valor atual da conta: {saldoUsuario.ToString("F2", CultureInfo.InvariantCulture)}\n");
-
-                Usuario.LimparTerminal();
-            }
-            else if (saldoUsuario > 0)
-            {
-                saldoUsuario -= qtdSacar;
-
-                Console.WriteLine($"\nValor sacado: {qtdSacar.ToString("F2", CultureInfo.InvariantCulture)}\n");
-                Console.WriteLine($"Valor atual da conta: {saldoUsuario.ToString("F2", CultureInfo.InvariantCulture)}\n");
-
-                Usuario.LimparTerminal();
-            }
-            else
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Não é possível sacar, pois o saldo da conta é R$ 0.00");
-                Console.ResetColor();
-                Console.WriteLine($"Valor atual da conta: {saldoUsuario.ToString("F2", CultureInfo.InvariantCulture)}\n");
-
-                Usuario.LimparTerminal();
-            }
-
-        }
-
-        // # Case 6 - Realizar Deposito
-        public static void RealizarDeposito(double qtdDeposito)
-        {
-            if (qtdDeposito > 0)
-            {
-                saldoUsuario += qtdDeposito;
-
-                Console.WriteLine($"\nValor depositado: {qtdDeposito.ToString("F2", CultureInfo.InvariantCulture)}\n");
-                Console.WriteLine($"Valor atual da conta: {saldoUsuario.ToString("F2", CultureInfo.InvariantCulture)}\n");
-
-                Usuario.LimparTerminal();
-            }
-            else
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("\nNão é possível depositar, pois o valor do deposito é R$ 0.00");
-                Console.ResetColor();
-                Console.WriteLine($"\nValor atual da conta: {saldoUsuario.ToString("F2", CultureInfo.InvariantCulture)}\n");
-
-                Usuario.LimparTerminal();
-            }
-
-        }
 
 
-        /* # Case 7 - Realizar Transferencia
-        public static void RealizarTransferencia(double qtdTransferencia)
-        {
-            if (qtdDeposito > 0)
-            {
-                saldoUsuario += qtdDeposito;
-
-                Console.WriteLine($"\nValor depositado: {qtdDeposito.ToString("F2", CultureInfo.InvariantCulture)}\n");
-                Console.WriteLine($"Valor atual da conta: {saldoUsuario.ToString("F2", CultureInfo.InvariantCulture)}\n");
-
-                Usuario.LimparTerminal();
-            }
-            else
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("\nNão é possível depositar, pois o valor do deposito é R$ 0.00");
-                Console.ResetColor();
-                Console.WriteLine($"\nValor atual da conta: {saldoUsuario.ToString("F2", CultureInfo.InvariantCulture)}\n");
-
-                Usuario.LimparTerminal();
-            }
-
-        }
-        */
     }
 }
