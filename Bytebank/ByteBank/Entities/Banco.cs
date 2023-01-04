@@ -255,45 +255,110 @@ namespace ClasseBanco
         // # Case 4 Método que mostra o saldo total no banco
         public static void MostrarSaldoTotalBanco()
         {
+            // Limite de tentativas pra achar o nome no banco
+            int tentativas = 0;
+
             Console.Write("\nDigite o nome completo do usuário para checar saldo total da conta: ");
             string nome = Console.ReadLine();
 
-            Console.Write("\nDigite a senha do do usuário para checar saldo total da conta: ");
-            string senha = Console.ReadLine();
-
-            // Percorrer a lista dos usuários aqui tava gerando um bug de pular o usuário e cair direto no else, então resolvi colocar só no if e separar os usuários.
-            if (usuario1.Nome == nome && usuario1.Senha == senha)
+            // Validação para ver se usuário quer checar algum nome antes mesmo de preencher um cadastro
+            if (usuario1.Nome == "" && usuario2.Nome == "" && usuario3.Nome == "")
             {
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine($"\nSaldo total no banco: R$ {usuario1.Saldo.ToString("F2", CultureInfo.InvariantCulture)}");
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("\nNenhum usuário cadastrado");
                 Console.ResetColor();
 
-                Usuario.LimparTerminal();
-            }
-            else if(usuario2.Nome == nome && usuario2.Senha == senha)
-            {
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine($"\nSaldo total no banco: R$ {usuario2.Saldo.ToString("F2", CultureInfo.InvariantCulture)}");
-                Console.ResetColor();
+                System.Threading.Thread.Sleep(1500);
+                Console.Clear();
+                Program.MostrarMenuPrincipal();
 
-                Usuario.LimparTerminal();
-            }
-            else if (usuario3.Nome == nome && usuario3.Senha == senha)
-            {
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine($"\nSaldo total no banco: R$ {usuario3.Saldo.ToString("F2", CultureInfo.InvariantCulture)}");
-                Console.ResetColor();
-
-                Usuario.LimparTerminal();
+                return;
             }
             else
             {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("USUÁRIO NÃO ENCONTRADO\n");
-                Console.ResetColor();
+                // Enquanto não achar o nome preenchido no cadastro
+                while (nome != usuario1.Nome || nome != usuario2.Nome || nome != usuario3.Nome)
+                {
+                    tentativas++;
+                
+                    if(tentativas <= 3)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.Write($"\n          Número de tentativas: {tentativas}\n");
+                        Console.ResetColor();
 
-                Usuario.LimparTerminal();
+                        Console.Write("\n          Digite um nome válido: ");
+                        nome = Console.ReadLine();
+                    }
+                    else
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.Write("\nNúmero máximo de tentativas atingidas !\n");
+                        Console.ResetColor();
+
+                        System.Threading.Thread.Sleep(1500);
+                        Console.Clear();
+                        Program.MostrarMenuPrincipal();
+                        break;
+                    }
+
+                    // Se usuario cadastrou nome e for igual aos objetos usuario já cadastrados, então dá pra ver o valor
+                    if(nome == usuario1.Nome || nome == usuario2.Nome || nome == usuario3.Nome)
+                    {
+                        tentativas = 0;
+
+                        Console.Write("\nDigite a senha do usuário para checar saldo total da conta: ");
+                        string senha = Console.ReadLine();
+
+                        while(senha != usuario1.Senha && senha != usuario2.Senha && senha != usuario3.Senha)
+                        {
+                            Console.WriteLine("\nSenha inválida\n");
+                            Console.Write("Digite Novamente: ");
+                            senha = Console.ReadLine();
+
+                        }
+
+
+                        // Percorrer a lista dos usuários aqui tava gerando um bug de pular o usuário e cair direto no else, então resolvi colocar só no if e separar os usuários.
+                        if (usuario1.Nome == nome && usuario1.Senha == senha)
+                        {
+                            Console.ForegroundColor = ConsoleColor.Green;
+                            Console.WriteLine($"\nSaldo total no banco: R$ {usuario1.Saldo.ToString("F2", CultureInfo.InvariantCulture)}");
+                            Console.ResetColor();
+
+                            Usuario.LimparTerminal();
+                        }
+                        else if (usuario2.Nome == nome && usuario2.Senha == senha)
+                        {
+                            Console.ForegroundColor = ConsoleColor.Green;
+                            Console.WriteLine($"\nSaldo total no banco: R$ {usuario2.Saldo.ToString("F2", CultureInfo.InvariantCulture)}");
+                            Console.ResetColor();
+
+                            Usuario.LimparTerminal();
+                        }
+                        else if (usuario3.Nome == nome && usuario3.Senha == senha)
+                        {
+                            Console.ForegroundColor = ConsoleColor.Green;
+                            Console.WriteLine($"\nSaldo total no banco: R$ {usuario3.Saldo.ToString("F2", CultureInfo.InvariantCulture)}");
+                            Console.ResetColor();
+
+                            Usuario.LimparTerminal();
+                        }
+                        else
+                        {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine("USUÁRIO NÃO ENCONTRADO\n");
+                            Console.ResetColor();
+
+                            Usuario.LimparTerminal();
+                        }
+                        break;
+                    }
+
+                }
             }
+
+
 
         }
 

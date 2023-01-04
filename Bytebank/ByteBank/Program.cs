@@ -12,7 +12,6 @@ namespace byteBank
         // # Método para mostrar o menu inicial
         public static void MenuInicial()
         {
-           
             // # Boas vindas do banco
             Console.BackgroundColor = ConsoleColor.Red;
             Console.ForegroundColor = ConsoleColor.Black;
@@ -42,7 +41,7 @@ namespace byteBank
                 else
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("-------------------------- Encerrando programa --------------------------");
+                    Console.WriteLine("-------------------------- Encerrando ByteBank --------------------------");
                     Console.ResetColor();
                     Environment.Exit(0);
                 }
@@ -77,7 +76,11 @@ namespace byteBank
             Console.ResetColor();
 
             Console.WriteLine("                        6 - Manipular a conta");
+
+            Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("                        0 - Para sair do programa");
+            Console.ResetColor();
+
             Console.Write("\n                        Digite a opção desejada: ");
         }
 
