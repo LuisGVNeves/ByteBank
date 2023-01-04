@@ -19,14 +19,41 @@ namespace Usuarios
         public static List<string> cpf = new List<string>();
         public static List<string> senha = new List<string>();
 
+
+        static void ValidarNome(List<string> nome)
+        {
+            Console.Write("\n                      Digite o nome do usuário: ");
+            Console.ForegroundColor = ConsoleColor.Blue;
+
+            string nomeUsuario = Console.ReadLine();
+            Console.ResetColor();
+
+            while (
+                nomeUsuario.Contains("1") ||
+                nomeUsuario.Contains("2") ||
+                nomeUsuario.Contains("3") ||
+                nomeUsuario.Contains("4") ||
+                nomeUsuario.Contains("5") ||
+                nomeUsuario.Contains("6") ||
+                nomeUsuario.Contains("7") ||
+                nomeUsuario.Contains("8") ||
+                nomeUsuario.Contains("9")
+                )
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.Write("\n                      Digite o nome do usuário sem números: ");
+                nomeUsuario = Console.ReadLine();
+                Console.ResetColor();
+            }
+            nome.Add(nomeUsuario);
+        }
+
         // # Método para CriarUsuario
         public static void CriarUsuario(List<string> nome, List<int> idade, List<double> saldo, List<string> cpf, List<string> senha)
         {
-            Console.Write("\n                      Digite o nome do usuário: ");
-            
-            Console.ForegroundColor = ConsoleColor.Blue;
-            nome.Add(Console.ReadLine());
-            Console.ResetColor();
+
+            ValidarNome(nome);
+
 
             Console.Write("                      Digite a idade do usuário: ");
 
@@ -61,6 +88,8 @@ namespace Usuarios
             Console.Clear();
             Program.MostrarMenuPrincipal();
         }
+
+
 
         // # Método para deletar o usuário
         public static void DeletarUsuario(List<string> nome, List<int> idade, List<double> saldo, List<string> cpf, List<string> senha)
