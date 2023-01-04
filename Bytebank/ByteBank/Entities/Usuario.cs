@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Usuarios
@@ -20,7 +21,7 @@ namespace Usuarios
         public static List<string> senha = new List<string>();
 
 
-        static void ValidarNome(List<string> nome)
+        private static void ValidarNome(List<string> nome)
         {
             Console.Write("\n                      Digite o nome do usuário: ");
             Console.ForegroundColor = ConsoleColor.Blue;
@@ -48,18 +49,39 @@ namespace Usuarios
             nome.Add(nomeUsuario);
         }
 
+        private static void ValidarIdade(List<int> idade)
+        {
+            Console.Write("                      Digite a idade do usuário: ");
+
+            Console.ForegroundColor = ConsoleColor.Blue;
+            string idadeUsuario = Console.ReadLine();
+            Console.ResetColor();
+
+
+            while (true)
+            {
+                if(Regex.IsMatch(idadeUsuario, @"^[a-zA-Z]+$"))
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.Write("\n                      Digite a idade do usuário sem letra: ");
+                    idadeUsuario = Console.ReadLine();
+                    Console.ResetColor();
+                }
+                else
+                {
+                    break;
+                    idade.Add(int.Parse(idadeUsuario));
+                }
+            }
+        }
+
         // # Método para CriarUsuario
         public static void CriarUsuario(List<string> nome, List<int> idade, List<double> saldo, List<string> cpf, List<string> senha)
         {
 
             ValidarNome(nome);
+            ValidarIdade(idade);
 
-
-            Console.Write("                      Digite a idade do usuário: ");
-
-            Console.ForegroundColor = ConsoleColor.Blue;
-            idade.Add(int.Parse(Console.ReadLine()));
-            Console.ResetColor();
 
             Console.Write("                      Digite o saldo do usuário: ");
 
