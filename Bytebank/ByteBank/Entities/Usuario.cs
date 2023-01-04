@@ -43,11 +43,10 @@ namespace Usuarios
             Console.WriteLine("Usuário criado com sucesso !");
             Console.ResetColor();
 
-            System.Threading.Thread.Sleep(700);
+            System.Threading.Thread.Sleep(1000);
             Console.Clear();
             Program.MostrarMenuPrincipal();
         }
-
 
         // # Método para deletar o usuário
         public static void DeletarUsuario(List<string> nome, List<int> idade, List<double> saldo, List<string> cpf, List<string> senha)
@@ -93,7 +92,12 @@ namespace Usuarios
                         Program.MostrarMenuPrincipal();
                     }
                 }
-
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("\nUSUÁRIO NÃO ACHADO\n");
+                    Console.ResetColor();
+                }
             }
 
             Console.WriteLine("\nConta deletada com sucesso");

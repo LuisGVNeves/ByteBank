@@ -9,6 +9,34 @@ namespace byteBank
 {
     class Program
     {
+
+        // Variável para fazer contagem de quantas contas possuem no banco, se atingir limite, usuário não consegue criar mais conta
+        public static int contadorUsuarios = 0;
+
+        // # Método para mostrar interface de cadastro
+        public static void InterfaceCadastro()
+        {
+            if(contadorUsuarios == 3)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("\nLimite de conta para um usuário atingido !");
+                Console.ResetColor();
+                Usuario.LimparTerminal();
+            }
+            else
+            {
+                // # Boas vindas do banco
+                Console.BackgroundColor = ConsoleColor.Green;
+                Console.ForegroundColor = ConsoleColor.Black;
+                Console.WriteLine("-------------------------- CADASTRO DE CONTA --------------------------");
+                Console.ResetColor();
+
+                Usuario.CriarUsuario(Usuario.nome, Usuario.idade, Usuario.saldo, Usuario.cpf, Usuario.senha);
+
+                contadorUsuarios++;
+            }
+        }
+
         // # Método para mostrar o menu inicial
         public static void MenuInicial()
         {
@@ -20,11 +48,15 @@ namespace byteBank
             Console.WriteLine("ByteBank é um banco terminal feito em C#, com conhecimentos aprendidos");
             Console.WriteLine("na escola Imã Learning Place.");
             Console.Write("\n\nDeseja iniciar o ByteBank SIM ou NÃO: ");
+
             string respostaUsuario = Console.ReadLine().ToUpper();
+
             if (respostaUsuario == "SIM")
             {
                 Console.Clear();
-                MostrarMenuPrincipal();
+                
+                // Iniciar Cadastro 
+                InterfaceCadastro();
             }
             else
             {
@@ -84,9 +116,6 @@ namespace byteBank
             Console.Write("\n                        Digite a opção desejada: ");
         }
 
-        // Variável para fazer contagem de quantas contas possuem no banco, se atingir limite, usuário não consegue criar mais conta
-        public static int contadorUsuarios = 1;
-
         public static void Main(string[] args)
         {
             // # Menu inicial pro usuário
@@ -100,28 +129,8 @@ namespace byteBank
                 switch (escolhaUsuario)
                 {
                     case 1:
-                        if (contadorUsuarios == 1)
-                        {
-                            Usuario.CriarUsuario(Usuario.nome, Usuario.idade, Usuario.saldo, Usuario.cpf, Usuario.senha);
-                            contadorUsuarios = 2;
-                        }
-                        else if (contadorUsuarios == 2)
-                        {
-                            Usuario.CriarUsuario(Usuario.nome, Usuario.idade, Usuario.saldo, Usuario.cpf, Usuario.senha);
-                            contadorUsuarios = 3;
-                        }
-                        else if (contadorUsuarios == 3)
-                        {
-                            Usuario.CriarUsuario(Usuario.nome, Usuario.idade, Usuario.saldo, Usuario.cpf, Usuario.senha);
-                            contadorUsuarios = 4;
-                        }
-                        else
-                        {
-                            Console.ForegroundColor = ConsoleColor.Red;
-                            Console.WriteLine("\nLimite de conta para um usuário atingido !");
-                            Console.ResetColor();
-                            Usuario.LimparTerminal();
-                        }
+                        Console.Clear();
+                        InterfaceCadastro();
                         break;
                     case 2:
                         Usuario.DeletarUsuario(Usuario.nome, Usuario.idade, Usuario.saldo, Usuario.cpf, Usuario.senha);
