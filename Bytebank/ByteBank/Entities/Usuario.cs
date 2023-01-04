@@ -22,28 +22,42 @@ namespace Usuarios
         // # Método para CriarUsuario
         public static void CriarUsuario(List<string> nome, List<int> idade, List<double> saldo, List<string> cpf, List<string> senha)
         {
-            Console.Write("\nDigite o nome do usuário: ");
+            Console.Write("\n                      Digite o nome do usuário: ");
+            
+            Console.ForegroundColor = ConsoleColor.Blue;
             nome.Add(Console.ReadLine());
-
-            Console.Write("Digite a idade do usuário: ");
-            idade.Add(int.Parse(Console.ReadLine()));
-
-            Console.Write("Digite o saldo do usuário: ");
-            saldo.Add(double.Parse(Console.ReadLine()));
-
-            Console.Write("Digite o cpf do usuário: ");
-            cpf.Add(Console.ReadLine());
-
-            Console.Write("Digite a senha do usuário: ");
-            senha.Add(Console.ReadLine());
-
-
-            // # Mensagem de sucesso
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine("Usuário criado com sucesso !");
             Console.ResetColor();
 
-            System.Threading.Thread.Sleep(1000);
+            Console.Write("                      Digite a idade do usuário: ");
+
+            Console.ForegroundColor = ConsoleColor.Blue;
+            idade.Add(int.Parse(Console.ReadLine()));
+            Console.ResetColor();
+
+            Console.Write("                      Digite o saldo do usuário: ");
+
+            Console.ForegroundColor = ConsoleColor.Blue;
+            saldo.Add(double.Parse(Console.ReadLine()));
+            Console.ResetColor();
+
+            Console.Write("                      Digite o cpf do usuário: ");
+
+            Console.ForegroundColor = ConsoleColor.Blue;
+            cpf.Add(Console.ReadLine());
+            Console.ResetColor();
+
+            Console.Write("                      Digite a senha do usuário: ");
+
+            Console.ForegroundColor = ConsoleColor.Blue;
+            senha.Add(Console.ReadLine());
+            Console.ResetColor();
+
+            // # Mensagem de sucesso
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.WriteLine("\n\n                      Usuário criado com sucesso !\n\n");
+            Console.ResetColor();
+
+            System.Threading.Thread.Sleep(1200);
             Console.Clear();
             Program.MostrarMenuPrincipal();
         }
