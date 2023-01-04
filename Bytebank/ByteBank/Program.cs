@@ -108,8 +108,7 @@ namespace byteBank
                         }
                         break;
                     case 2:
-                        string cpf = "";
-                        Banco.DeletarUsuario(cpf);
+                        Banco.DeletarUsuario();
                         break;
                     case 3:
                         Banco.ListarTodosUsuariosDoBanco();

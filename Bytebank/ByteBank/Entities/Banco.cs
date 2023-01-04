@@ -122,61 +122,115 @@ namespace ClasseBanco
 
 
         // # Case 2 Método para deletar usuario no banco
-        public static void DeletarUsuario(string cpf)
+        public static void DeletarUsuario()
         {
             Console.Write("\nDigite o nome completo do usuário que quer deletar: ");
             string nome = Console.ReadLine();
 
-            Console.Write("\nConfirme o CPF do usuário: ");
-            cpf = Console.ReadLine();
-
-            foreach (Usuario p in usuarios)
+            if (nome == usuario1.Nome)
             {
-                if (nome == p.Nome && cpf == p.Cpf)
+                Console.Write($"\n" +
+                    $"O usuário: {usuario1.Nome} irá ser deletado, deseja realmente excluir a conta? SIM ou NÃO: ");
+                string perguntaConfirmacao = Console.ReadLine().ToUpper();
+
+                if (perguntaConfirmacao == "SIM")
                 {
-                    string perguntaConfirmacao = "";
-                    Console.WriteLine($"\nO usuário: {p.Nome} irá ser deletado, deseja realmente excluir a conta? SIM ou NÃO:");
+                    usuarios.Remove(usuario1);
 
-                    perguntaConfirmacao = Console.ReadLine().ToUpper();
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine($"\nUsuário {usuario1.Nome} deletado com sucesso !\n");
+                    Console.ResetColor();
 
-                    while (perguntaConfirmacao != "SIM" || perguntaConfirmacao != "NÃO" || perguntaConfirmacao != "NAO")
-                    {
-                        if (perguntaConfirmacao == "SIM")
-                        {
-                            usuarios.Remove(p);
+                    System.Threading.Thread.Sleep(1500);
+                    Console.Clear();
 
-                            Console.ForegroundColor = ConsoleColor.Red;
-                            Console.WriteLine("\nUsuário deletado com sucesso !\n");
-                            Console.ResetColor();
+                    Program.MostrarMenuPrincipal();
+                }
+                else if (perguntaConfirmacao == "NAO" || perguntaConfirmacao == "NÃO")
+                {
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine("\nOperação cancelada com sucesso !\n");
+                    Console.ResetColor();
 
-                            System.Threading.Thread.Sleep(1500);
-                            Console.Clear();
+                    System.Threading.Thread.Sleep(1500);
+                    Console.Clear();
 
-                            break;
-                        }
-                        if (perguntaConfirmacao == "NAO" || perguntaConfirmacao == "NÃO")
-                        {
-                            Console.ForegroundColor = ConsoleColor.Green;
-                            Console.WriteLine("\nOperação cancelada com sucesso !\n");
-                            Console.ResetColor();
-
-                            System.Threading.Thread.Sleep(1500);
-                            Console.Clear();
-                            break;
-
-                        }
-
-                        Console.WriteLine("\nDigite SIM ou NÃO !\n");
-
-                        System.Threading.Thread.Sleep(1000);
-
-                        Console.WriteLine($"\nO usuário: {p.Nome} irá ser deletado, deseja realmente excluir a conta? SIM ou NÃO:");
-                        perguntaConfirmacao = Console.ReadLine().ToUpper();
-
-                    }
-                    break;
+                    Program.MostrarMenuPrincipal();
                 }
             }
+            else if(nome == usuario2.Nome)
+            {
+                Console.Write($"\n" +
+                    $"O usuário: {usuario2.Nome} irá ser deletado, deseja realmente excluir a conta? SIM ou NÃO: ");
+                string perguntaConfirmacao = Console.ReadLine().ToUpper();
+
+                if (perguntaConfirmacao == "SIM")
+                {
+                    usuarios.Remove(usuario2);
+
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine($"\nUsuário {usuario2.Nome} deletado com sucesso !\n");
+                    Console.ResetColor();
+
+                    System.Threading.Thread.Sleep(1500);
+                    Console.Clear();
+
+                    Program.MostrarMenuPrincipal();
+                }
+                else if (perguntaConfirmacao == "NAO" || perguntaConfirmacao == "NÃO")
+                {
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine("\nOperação cancelada com sucesso !\n");
+                    Console.ResetColor();
+
+                    System.Threading.Thread.Sleep(1500);
+                    Console.Clear();
+
+                    Program.MostrarMenuPrincipal();
+                }
+            }
+            else if(nome == usuario3.Nome)
+            {
+                Console.Write($"\n" +
+                    $"O usuário: {usuario3.Nome} irá ser deletado, deseja realmente excluir a conta? SIM ou NÃO: ");
+                string perguntaConfirmacao = Console.ReadLine().ToUpper();
+
+                if (perguntaConfirmacao == "SIM")
+                {
+                    usuarios.Remove(usuario3);
+
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine($"\nUsuário {usuario3.Nome} deletado com sucesso !\n");
+                    Console.ResetColor();
+
+                    System.Threading.Thread.Sleep(1500);
+                    Console.Clear();
+
+                    Program.MostrarMenuPrincipal();
+                }
+                else if (perguntaConfirmacao == "NAO" || perguntaConfirmacao == "NÃO")
+                {
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine("\nOperação cancelada com sucesso !\n");
+                    Console.ResetColor();
+
+                    System.Threading.Thread.Sleep(1500);
+                    Console.Clear();
+
+                    Program.MostrarMenuPrincipal();
+                }
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("\nUSUARIO NÃO ENCONTRADO");
+                Console.ResetColor();
+
+                System.Threading.Thread.Sleep(700);
+                Console.Clear();
+                Program.MostrarMenuPrincipal();
+            }
+
         }
 
         // # Case 3 Método que lista todos os usuarios do banco
