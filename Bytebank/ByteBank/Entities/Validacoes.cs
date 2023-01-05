@@ -83,6 +83,7 @@ namespace validacoes
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.Write("\n                      Saldo inválido, digite sem letras: ");
                 Console.ResetColor();
+
                 saldoUsuario = Console.ReadLine();
 
                 if (inputUsuario == true)
@@ -106,44 +107,47 @@ namespace validacoes
             cpfUsuario = Console.ReadLine();
             Console.ResetColor();
 
+            cpf.Add(cpfUsuario);
+            /*
             bool ehNumero = int.TryParse(cpfUsuario, out int n);
 
             while (ehNumero == false)
             {
 
-                Console.Write("\n                      CPF com letras inválido, digite novamente: ");
+                Console.Write("\n                      CPF inválido digite novamente: ");
                 Console.ForegroundColor = ConsoleColor.Blue;
                 cpfUsuario = Console.ReadLine();
                 Console.ResetColor();
 
                 ehNumero = int.TryParse(cpfUsuario, out int x);
-
-                while (ehNumero == true)
-                {
-                    if (cpfUsuario.Length < 11)
-                    {
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.Write("\n                      Quantidade de caracteres inválido, digite novamente: ");
-                        Console.ResetColor();
-                        cpfUsuario = Console.ReadLine();
-                    }
-                    else
-                    {
-                        cpfAtualizado += cpfUsuario.Substring(0, 3);
-                        cpfAtualizado += ".";
-                        cpfAtualizado += cpfUsuario.Substring(3, 3);
-                        cpfAtualizado += ".";
-                        cpfAtualizado += cpfUsuario.Substring(6, 3);
-                        cpfAtualizado += "-";
-                        cpfAtualizado += cpfUsuario[cpfUsuario.Length - 2];
-                        cpfAtualizado += cpfUsuario[cpfUsuario.Length - 1];
-                        break;
-                    }
-
-                }
             }
+            while (ehNumero == true)
+            {
+                if (cpfUsuario.Length < 11)
+                {
+                    Console.Write("\n                      CPF inválido digite novamente: ");
+                    Console.ForegroundColor = ConsoleColor.Blue;
+                    cpfUsuario = Console.ReadLine();
 
-            cpf.Add(cpfAtualizado);
+                    Console.ResetColor();
+                }
+                else
+                {
+                    cpfAtualizado += cpfUsuario.Substring(0, 3);
+                    cpfAtualizado += ".";
+                    cpfAtualizado += cpfUsuario.Substring(3, 3);
+                    cpfAtualizado += ".";
+                    cpfAtualizado += cpfUsuario.Substring(6, 3);
+                    cpfAtualizado += "-";
+                    cpfAtualizado += cpfUsuario[cpfUsuario.Length - 2];
+                    cpfAtualizado += cpfUsuario[cpfUsuario.Length - 1];
+                    break;
+                }
+
+            }
+            */
+
+
         }
         public static void ValidarSenha(List<string> senha)
         {
@@ -156,7 +160,7 @@ namespace validacoes
             Console.ResetColor();
 
 
-            while(senhaUsuario.Length != 8)
+            while(senhaUsuario.Length < 8)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.Write("\n                      Senha muito curta, senha no minímo 8 caracteres: ");

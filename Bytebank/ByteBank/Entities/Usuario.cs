@@ -28,8 +28,8 @@ namespace Usuarios
             Validacoes.ValidarNome(nome);
             Validacoes.ValidarIdade(idade);
             Validacoes.ValidarSaldo(saldo);
-            Validacoes.ValidarCPF(cpf);
             Validacoes.ValidarSenha(senha);
+            Validacoes.ValidarCPF(cpf);
 
             // # Mensagem de sucesso
             Console.ForegroundColor = ConsoleColor.Blue;
@@ -103,12 +103,31 @@ namespace Usuarios
         public static void ListarTodosUsuariosDoBanco(List<string> nome, List<string> cpf, List<double> saldo, List<int> idade)
         {
             Console.ForegroundColor = ConsoleColor.Magenta;
-            Console.WriteLine("\n\n***LISTA DE USUÁRIOS BYTEBANK***");
+            Console.Clear();
+            Console.WriteLine(@"╔═════════════════════════ LISTA DE USUÁRIOS BYTEBANK ════════════════════════╗");
             Console.ResetColor();
 
             for (int i = 0; i < nome.Count(); i++)
             {
-                Console.WriteLine($"\nNome: {nome[i]} \nIdade: {idade[i]} \nSaldo: R${saldo[i]}\nCPF:{cpf[i]}");
+                Console.ForegroundColor = ConsoleColor.Magenta;
+                Console.Write("\n                               Nome:");
+                Console.ResetColor();
+                Console.Write($"  {nome[i]}");
+
+                Console.ForegroundColor = ConsoleColor.Magenta;
+                Console.Write("\n                               Idade:");
+                Console.ResetColor();
+                Console.Write($"  {idade[i]}");
+
+                Console.ForegroundColor = ConsoleColor.Magenta;
+                Console.Write("\n                               Saldo:");
+                Console.ResetColor();
+                Console.Write($"  {saldo[i]} R$");
+
+                Console.ForegroundColor = ConsoleColor.Magenta;
+                Console.Write("\n                               CPF:");
+                Console.ResetColor();
+                Console.Write($"  {cpf[i]}");
             }
 
             Console.WriteLine("\n\n\n");
@@ -209,7 +228,6 @@ namespace Usuarios
             }
         }
 
-
         // # Método para apresentar usuário unico
         public static void DetalhesUsuario(List<string> nome, List<double> saldo, List<int> idade)
         {
@@ -257,8 +275,9 @@ namespace Usuarios
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.WriteLine("\nRedirecionando para o inicío.. ");
                 Console.ResetColor();
-
                 System.Threading.Thread.Sleep(1000);
+                Console.Clear();
+                Program.MenuInicial();
                 Console.Clear();
                 Program.MenuInicial();
             }
