@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace validacoes
 {
@@ -57,12 +58,12 @@ namespace validacoes
 
                 if (inputUsuario == true)
                 {
-                    idade.Add(int.Parse(idadeUsuario));
                     break;
                 }
 
                 inputUsuario = int.TryParse(idadeUsuario, out int outroNumero);
             }
+            idade.Add(int.Parse(idadeUsuario));
 
         }
         public static void ValidarSaldo(List<double> saldo)
@@ -87,15 +88,63 @@ namespace validacoes
 
                 if (inputUsuario == true)
                 {
-                    saldo.Add(double.Parse(saldoUsuario));
                     break;
                 }
 
                 inputUsuario = decimal.TryParse(saldoUsuario, out decimal outroNumero);
 
             }
+            saldo.Add(double.Parse(saldoUsuario));
 
         }
+        public static void ValidarCPF(List<string> cpf)
+        {
+            string cpfUsuario = "";
+            string cpfAtualizado = "";
+            
+            Console.Write("\n                      Digite o cpf do usuário: ");
+            Console.ForegroundColor = ConsoleColor.Blue;
+            cpfUsuario = Console.ReadLine();
+            Console.ResetColor();
 
+            bool ehNumero = int.TryParse(cpfUsuario, out int n);
+
+            while (ehNumero == false)
+            {
+
+                Console.Write("\n                      CPF inválido digite novamente: ");
+                Console.ForegroundColor = ConsoleColor.Blue;
+                cpfUsuario = Console.ReadLine();
+                Console.ResetColor();
+
+                ehNumero = int.TryParse(cpfUsuario, out int x);
+            }
+            while (ehNumero == true)
+            {
+                if (cpfUsuario.Length < 11)
+                {
+                    Console.Write("\n                      CPF inválido digite novamente: ");
+                    Console.ForegroundColor = ConsoleColor.Blue;
+                    cpfUsuario = Console.ReadLine();
+
+                    Console.ResetColor();
+                }
+                else
+                {
+                    cpfAtualizado += cpfUsuario.Substring(0, 3);
+                    cpfAtualizado += ".";
+                    cpfAtualizado += cpfUsuario.Substring(3, 3);
+                    cpfAtualizado += ".";
+                    cpfAtualizado += cpfUsuario.Substring(6, 3);
+                    cpfAtualizado += "-";
+                    cpfAtualizado += cpfUsuario[cpfUsuario.Length - 2];
+                    cpfAtualizado += cpfUsuario[cpfUsuario.Length - 1];
+                    break;
+                }
+
+            }
+            cpf.Add(cpfAtualizado);
+
+        }
     }
 }

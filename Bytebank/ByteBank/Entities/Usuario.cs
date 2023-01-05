@@ -21,7 +21,6 @@ namespace Usuarios
         public static List<string> cpf = new List<string>();
         public static List<string> senha = new List<string>();
 
-
         // # Método para CriarUsuario
         public static void CriarUsuario(List<string> nome, List<int> idade, List<double> saldo, List<string> cpf, List<string> senha)
         {
@@ -29,14 +28,7 @@ namespace Usuarios
             Validacoes.ValidarNome(nome);
             Validacoes.ValidarIdade(idade);
             Validacoes.ValidarSaldo(saldo);
-
-
-
-            Console.Write("                      Digite o cpf do usuário: ");
-
-            Console.ForegroundColor = ConsoleColor.Blue;
-            cpf.Add(Console.ReadLine());
-            Console.ResetColor();
+            Validacoes.ValidarCPF(cpf);
 
             Console.Write("                      Digite a senha do usuário: ");
 
@@ -53,7 +45,6 @@ namespace Usuarios
             Console.Clear();
             Program.MostrarMenuPrincipal();
         }
-
 
 
         // # Método para deletar o usuário
@@ -120,9 +111,9 @@ namespace Usuarios
             Console.WriteLine("\n\n***LISTA DE USUÁRIOS BYTEBANK***");
             Console.ResetColor();
 
-            for (int i = 0; i < nome.Count; i++)
+            for (int i = 0; i < nome.Count(); i++)
             {
-                Console.WriteLine($"\n Nome: {nome[i]} \nIdade: {idade[i]} \nSaldo: R${saldo[i]}\n CPF:{cpf[i]}");
+                Console.WriteLine($"\nNome: {nome[i]} \nIdade: {idade[i]} \nSaldo: R${saldo[i]}\nCPF:{cpf[i]}");
             }
 
             Console.WriteLine("\n\n\n");
@@ -277,6 +268,5 @@ namespace Usuarios
                 Program.MenuInicial();
             }
         }
-
     }
 }

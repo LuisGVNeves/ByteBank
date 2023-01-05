@@ -30,6 +30,7 @@ namespace byteBank
                 Console.WriteLine(@"╔═════════════════════════ CADASTRO DE CONTA ════════════════════════╗");
                 Console.ResetColor();
 
+
                 Usuario.CriarUsuario(Usuario.nome, Usuario.idade, Usuario.saldo, Usuario.cpf, Usuario.senha);
 
                 contadorUsuarios++;
