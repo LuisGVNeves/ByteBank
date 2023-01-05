@@ -29,12 +29,7 @@ namespace Usuarios
             Validacoes.ValidarIdade(idade);
             Validacoes.ValidarSaldo(saldo);
             Validacoes.ValidarCPF(cpf);
-
-            Console.Write("                      Digite a senha do usuário: ");
-
-            Console.ForegroundColor = ConsoleColor.Blue;
-            senha.Add(Console.ReadLine());
-            Console.ResetColor();
+            Validacoes.ValidarSenha(senha);
 
             // # Mensagem de sucesso
             Console.ForegroundColor = ConsoleColor.Blue;
