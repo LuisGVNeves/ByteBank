@@ -1,4 +1,5 @@
 ﻿using byteBank;
+using validacoes;
 using ClasseBanco;
 using System;
 using System.Collections;
@@ -21,73 +22,15 @@ namespace Usuarios
         public static List<string> senha = new List<string>();
 
 
-        private static void ValidarNome(List<string> nome)
-        {
-            Console.Write("\n                      Digite o nome do usuário: ");
-            Console.ForegroundColor = ConsoleColor.Blue;
-
-            string nomeUsuario = Console.ReadLine();
-            Console.ResetColor();
-
-            while (
-                nomeUsuario.Contains("1") ||
-                nomeUsuario.Contains("2") ||
-                nomeUsuario.Contains("3") ||
-                nomeUsuario.Contains("4") ||
-                nomeUsuario.Contains("5") ||
-                nomeUsuario.Contains("6") ||
-                nomeUsuario.Contains("7") ||
-                nomeUsuario.Contains("8") ||
-                nomeUsuario.Contains("9")
-                )
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.Write("\n                      Digite o nome do usuário sem números: ");
-                nomeUsuario = Console.ReadLine();
-                Console.ResetColor();
-            }
-            nome.Add(nomeUsuario);
-        }
-
-        private static void ValidarIdade(List<int> idade)
-        {
-            Console.Write("                      Digite a idade do usuário: ");
-
-            Console.ForegroundColor = ConsoleColor.Blue;
-            string idadeUsuario = Console.ReadLine();
-            Console.ResetColor();
-
-
-            while (true)
-            {
-                if(Regex.IsMatch(idadeUsuario, @"^[a-zA-Z]+$"))
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.Write("\n                      Digite a idade do usuário sem letra: ");
-                    idadeUsuario = Console.ReadLine();
-                    Console.ResetColor();
-                }
-                else
-                {
-                    break;
-                    idade.Add(int.Parse(idadeUsuario));
-                }
-            }
-        }
-
         // # Método para CriarUsuario
         public static void CriarUsuario(List<string> nome, List<int> idade, List<double> saldo, List<string> cpf, List<string> senha)
         {
+            // Input dos usuários com validação
+            Validacoes.ValidarNome(nome);
+            Validacoes.ValidarIdade(idade);
+            Validacoes.ValidarSaldo(saldo);
 
-            ValidarNome(nome);
-            ValidarIdade(idade);
 
-
-            Console.Write("                      Digite o saldo do usuário: ");
-
-            Console.ForegroundColor = ConsoleColor.Blue;
-            saldo.Add(double.Parse(Console.ReadLine()));
-            Console.ResetColor();
 
             Console.Write("                      Digite o cpf do usuário: ");
 
