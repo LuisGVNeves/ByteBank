@@ -190,7 +190,7 @@ namespace Usuarios
             for (int i = 0; i < nome.Count(); i++)
             {
                 Console.ForegroundColor = ConsoleColor.Magenta;
-                Console.Write("\n                               Nome:");
+                Console.Write("\n\n                               Nome:");
                 Console.ResetColor();
                 Console.Write($"  {nome[i]}");
 
@@ -220,25 +220,23 @@ namespace Usuarios
         }
 
         // # Método para mostrar o saldo do usuario
-        public static void MostrarSaldoTotalBanco(List<string> nome, List<double> saldo, List<string> senha)
+        public static void MostrarSaldoTotalBanco(List<string> nome, List<double> saldo, List<string> senha, double saldoAtualizado)
         {
             Console.ForegroundColor = ConsoleColor.Green;
             Console.Clear();
             Console.WriteLine(@"╔═════════════════════════ SALDO USUÁRIOS BYTEBANK ════════════════════════╗");
             Console.ResetColor();
+            Console.WriteLine("\n\nUsuários disponíveis: \n");
 
             for (int i = 0; i < nome.Count(); i++)
             {
-                Console.WriteLine("\n\nUsuários disponíveis: \n");
                 Console.ForegroundColor = ConsoleColor.Magenta;
                 Console.Write("                               Nome:");
                 Console.ResetColor();
                 Console.Write($"  {nome[i]}\n");
-
-                Console.Write("\n                  ════════════════════════════════════════════\n\n");
-                Console.ResetColor();
-
             }
+            Console.Write("\n                  ════════════════════════════════════════════\n\n");
+            Console.ResetColor();
 
             // Validação para ver se usuário quer checar algum nome antes mesmo de preencher um cadastro
             if (nome.Count() == 0)
@@ -260,79 +258,25 @@ namespace Usuarios
             Console.Write("\nDigite o nome completo do usuário para checar saldo total da conta: ");
             string nomeUsuario = Console.ReadLine();
 
-            int nomePercorrido = nome.FindIndex(nome => nome == nomeUsuario);
-
-            if (nomePercorrido > -1)
+            for (int i = 0; i < nome.Count; i++)
             {
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine($"\nSaldo total no banco: R$ {saldo.Sum()}");
-                Console.ResetColor();
-
-                Usuario.LimparTerminal();
-            }
-
-            while (nomePercorrido == -1)
-            {
-                Console.Write("\nDeseja fazer uma nova procura? Sim ou NÃO: ");
-                string respostaUsuario = Console.ReadLine().ToUpper();
-
-                if (respostaUsuario == "SIM")
+                if (nomeUsuario == nome[i])
                 {
-                    if (tentativas <= 3)
+                    if (nomeUsuario == Banco.usuarioEnviarTransferencia)
                     {
-                        tentativas++;
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.Write($"\n          Número de tentativas: {tentativas}\n");
-                        Console.ResetColor();
-
-                        Console.Write("\n          Digite um nome válido: ");
-                        nomeUsuario = Console.ReadLine();
-
-                        nomePercorrido = nome.FindIndex(nome => nome == nomeUsuario);
-
+                        saldo[i] = Banco.saldoUsuario1;
                     }
-                    else
+                    if (nomeUsuario == Banco.usuarioReceberTransferencia)
                     {
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.Write("\nNúmero máximo de tentativas atingidas !\n");
-                        Console.ResetColor();
-
-                        System.Threading.Thread.Sleep(1500);
-                        Console.Clear();
-                        Program.MostrarMenuPrincipal();
-                        break;
+                        saldo[i] = Banco.saldoUsuario2;
                     }
-                }
-                else if (respostaUsuario == "NÃO" || respostaUsuario == "NAO")
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.Write("\n               Voltando ao menu \n");
-                    Console.ResetColor();
-                    System.Threading.Thread.Sleep(1500);
-                    Console.Clear();
-                    Program.MostrarMenuPrincipal();
-                    break;
-                }
-                else
-                {
-                    Console.Write("\n               Voltando ao menu \n");
-                    Console.ResetColor();
-                    System.Threading.Thread.Sleep(1500);
-                    Console.Clear();
-                    Program.MostrarMenuPrincipal();
+                    Console.WriteLine($"Nome usuário: {nome[i]}");
+                    Console.WriteLine($"Saldo usuário: {saldo[i]}");
                 }
 
-
-                if(nomePercorrido > -1)
-                {
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    Console.WriteLine($"\nSaldo total no banco: R$ {saldo.Sum()}");
-                    Console.ResetColor();
-
-                    Usuario.LimparTerminal();
-                    break;
-                }
             }
+            Console.WriteLine("\n\n");
+            Usuario.LimparTerminal();
 
         }
 

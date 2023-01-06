@@ -137,7 +137,7 @@ namespace byteBank
                         Usuario.ListarTodosUsuariosDoBanco(Usuario.nome, Usuario.cpf, Usuario.saldo, Usuario.idade);
                         break;
                     case 4:
-                        Usuario.MostrarSaldoTotalBanco(Usuario.nome, Usuario.saldo, Usuario.senha);
+                        Usuario.MostrarSaldoTotalBanco(Usuario.nome, Usuario.saldo, Usuario.senha,0.0);
                         break;
                     case 5:
                         Usuario.DetalhesUsuario(Usuario.nome, Usuario.saldo, Usuario.idade);

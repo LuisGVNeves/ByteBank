@@ -412,6 +412,11 @@ namespace ClasseBanco
             }
         }
 
+        // Variaveis temporárias pra alocar o saldo da propriedade do usuário e atualizar depois
+        public static double saldoUsuario1 = 0.0;
+        public static double saldoUsuario2 = 0.0;
+        public static string usuarioEnviarTransferencia;
+        public static string usuarioReceberTransferencia;
         public static void RealizarTransferencia(double qtdTransferencia, List<string> nome, List<double> saldo)
         {
             Console.ForegroundColor = ConsoleColor.Gray;
@@ -419,19 +424,99 @@ namespace ClasseBanco
             Console.WriteLine(@"╔═════════════════════════ AREA TRANSFERENCIA ════════════════════════╗");
             Console.ResetColor();
 
-            // Variaveis temporárias pra alocar o saldo da propriedade do usuário e atualizar depois
-            double saldoUsuario1 = 0.0;
-            double saldoUsuario2 = 0.0;
 
             Console.Write("\nNome do usuário que vai enviar a transferência: ");
-            string nomeUsuario = Console.ReadLine();
+            usuarioEnviarTransferencia = Console.ReadLine();
+
+            // Procurar nome do usuário que vai enviar a transferencia na lista de nomes
+            int nomePercorrido = nome.FindIndex(nome => nome == usuarioEnviarTransferencia);
+            while (nomePercorrido == -1)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("\nNOME NÃO ACHADO");
+                Console.ResetColor();
+
+                Console.Write("\nDeseja tentar de novo? SIM ou NÃO: ");
+                string respostaUsuario = Console.ReadLine().ToUpper();
+
+
+                Console.ForegroundColor = ConsoleColor.DarkGray;
+                Console.Write("════════════════════════════════════════════");
+                Console.ResetColor();
+
+                if (respostaUsuario == "SIM")
+                {
+                    Console.Write("\n\nDigite o nome do usuário que vai enviar a transferência: ");
+                    usuarioEnviarTransferencia = Console.ReadLine();
+
+                    nomePercorrido = nome.FindIndex(nome => nome == usuarioEnviarTransferencia);
+                }
+
+                if (respostaUsuario == "NÃO" || respostaUsuario == "NAO")
+                {
+                    Console.Clear();
+
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("\n\n                     Voltando ao menu principal\n");
+                    Console.ResetColor();
+
+                    System.Threading.Thread.Sleep(1000);
+                    Console.Clear();
+
+                    Program.MostrarMenuPrincipal();
+                    return;
+                }
+            }
+
 
             Console.Write("\nDigite o nome do usuário que vai receber a transferência: ");
-            string usuarioReceberTransferencia = Console.ReadLine();
+            usuarioReceberTransferencia = Console.ReadLine();
 
+            // Procurar nome do usuário que vai receber a transferencia na lista de nomes
+            nomePercorrido = nome.FindIndex(nome => nome == usuarioReceberTransferencia);
+            while (nomePercorrido == -1)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("\nNOME NÃO ACHADO");
+                Console.ResetColor();
+
+                Console.Write("\nDeseja tentar de novo? SIM ou NÃO: ");
+                string respostaUsuario = Console.ReadLine().ToUpper();
+
+
+                Console.ForegroundColor = ConsoleColor.DarkGray;
+                Console.Write("════════════════════════════════════════════");
+                Console.ResetColor();
+
+                if (respostaUsuario == "SIM")
+                {
+                    Console.Write("\n\nDigite o nome do usuário que vai receber a transferência: ");
+                    usuarioReceberTransferencia = Console.ReadLine();
+
+                    nomePercorrido = nome.FindIndex(nome => nome == usuarioReceberTransferencia);
+                }
+
+                if (respostaUsuario == "NÃO" || respostaUsuario == "NAO")
+                {
+                    Console.Clear();
+
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("\n\n                     Voltando ao menu principal\n");
+                    Console.ResetColor();
+
+                    System.Threading.Thread.Sleep(1000);
+                    Console.Clear();
+
+                    Program.MostrarMenuPrincipal();
+                    return;
+                }
+            }
+
+
+            // O saldo dos usuario que transfere e do usuário que recebe serão colocados nas variaveis saldoUsuario1 e saldoUsuario2 momentaneamente 
             for (int i = 0; i < nome.Count(); i++)
             {
-                if (nome[i] == nomeUsuario)
+                if (nome[i] == usuarioEnviarTransferencia)
                 {
                     saldoUsuario1 = saldo[i];
                 }
@@ -441,18 +526,113 @@ namespace ClasseBanco
                 }
             }
 
+
+            // Transferencia do usuário pra quem recebe
             if (qtdTransferencia > 0 && qtdTransferencia <= saldoUsuario1)
             {
-                saldoUsuario1 -= qtdTransferencia;
-                saldoUsuario2 += qtdTransferencia;
-
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine("\nTransferência realizada com sucesso !");
+                Console.ForegroundColor = ConsoleColor.Gray;
+                Console.Clear();
+                Console.WriteLine(@"╔═════════════════════════ AREA TRANSFERENCIA ════════════════════════╗");
                 Console.ResetColor();
 
-                System.Threading.Thread.Sleep(1000);
-                Usuario.LimparTerminal();
+                // Usuarios para melhorar visibilidade no terminal
+                for (int i = 0; i < nome.Count(); i++)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.Write("\n                          Nome:");
+                    Console.ResetColor();
+                    Console.Write($"  {nome[i]}");
+
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.Write("\n                          Saldo:");
+                    Console.ResetColor();
+                    Console.Write($"  {saldo[i]} R$");
+
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.Write("\n\n            ════════════════════════════════════════════\n");
+                    Console.ResetColor();
+                }
+
+                // # Confirmação se usuário quer mesmo fazer a transferencia
+                Console.Write($"\nO usuário {usuarioEnviarTransferencia} irá fazer uma tranferência de {qtdTransferencia} R$ para {usuarioReceberTransferencia}, confirmar transferência? SIM ou NÃO: ");
+                string perguntaConfirmacao = Console.ReadLine().ToUpper();
+
+                if (perguntaConfirmacao == "SIM")
+                {
+                    Random comprovante = new Random();
+
+                    // Valor do usuário que vai transferir antes de ocorrer a transferencia
+                    double saldoUsuarioUmAntigo = saldoUsuario1;
+                    saldoUsuario1 -= qtdTransferencia;
+                    saldoUsuario2 += qtdTransferencia;
+
+                    // Variaveis saldoUsuario já estão atualizadas com o valor da transferencia e deposito, agora vou pegar o saldo[i] de acordo com o nome de quem transferiu e quem recebeu
+                    for (int i = 0; i < nome.Count(); i++)
+                    {
+                        // # Atualizando o valor
+                        if (nome[i] == usuarioEnviarTransferencia)
+                        {
+                            saldo[i] = saldoUsuario1;
+                        }
+                        if (nome[i] == usuarioReceberTransferencia)
+                        {
+                            saldo[i] = saldoUsuario2;
+                        }
+                    }
+
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine("\n\n  Transferência realizada com sucesso !\n\n");
+                    Console.ResetColor();
+
+
+                    Console.ResetColor();
+                    System.Threading.Thread.Sleep(1100);
+                    Console.Clear();
+
+                    Console.ForegroundColor = ConsoleColor.DarkGray;
+                    Console.WriteLine(@"╔═════════════════════════ COMPROVANTE DE TRANSFERÊNCIA ════════════════════════╗");
+
+                    Console.WriteLine(@"                 ════════════════════════════════════════════");
+                    Console.WriteLine($"            Comprovante: {comprovante.Next(50)}");
+                    Console.ResetColor();
+                    Console.WriteLine($"\n                          Usuário: {usuarioEnviarTransferencia} ");
+                    Console.WriteLine($"\n                          Saldo: {saldoUsuarioUmAntigo}");
+                    Console.WriteLine("                     ----------------------------");
+                    Console.WriteLine($"\n                          Solicitação de transferência: - {qtdTransferencia.ToString("F2", CultureInfo.InvariantCulture)} R$\n");
+                    Console.WriteLine("                     ----------------------------");
+
+                    Console.WriteLine($"\n                          Saldo atual: {saldoUsuario1} R$\n");
+
+                    Console.ForegroundColor = ConsoleColor.DarkGray;
+                    Console.WriteLine(@"                 ════════════════════════════════════════════");
+                    Console.ResetColor();
+
+                    Usuario.LimparTerminal();
+                    return;
+                }
+                else if (perguntaConfirmacao == "NAO" || perguntaConfirmacao == "NÃO")
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("\n   Transferência cancelada com sucesso !\n");
+                    Console.ResetColor();
+
+                    System.Threading.Thread.Sleep(1500);
+                    Console.Clear();
+
+                    Program.MostrarMenuPrincipal();
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("\n   Transferência cancelada\n");
+                    Console.ResetColor();
+
+                    System.Threading.Thread.Sleep(100);
+                    Console.Clear();
+                    Program.MostrarMenuPrincipal();
+                }
             }
+            // Se o valor da transferencia for menor que 0
             else if (qtdTransferencia <= 0)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
@@ -462,6 +642,7 @@ namespace ClasseBanco
                 System.Threading.Thread.Sleep(1000);
                 Usuario.LimparTerminal();
             }
+            // Se o usuario que vai transferir tentar transferir um saldo maior que há na conta dele
             else if (qtdTransferencia > saldoUsuario1)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
@@ -481,18 +662,6 @@ namespace ClasseBanco
                 Usuario.LimparTerminal();
             }
 
-            for (int i = 0; i < nome.Count(); i++)
-            {
-                // # Atualizando o valor
-                if (nome[i] == nomeUsuario)
-                {
-                    saldo[i] = saldoUsuario1;
-                }
-                if (nome[i] == usuarioReceberTransferencia)
-                {
-                    saldo[i] = saldoUsuario2;
-                }
-            }
 
 
         }
