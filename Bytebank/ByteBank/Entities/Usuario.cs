@@ -220,7 +220,7 @@ namespace Usuarios
         }
 
         // # Método para mostrar o saldo do usuario
-        public static void MostrarSaldoTotalBanco(List<string> nome, List<double> saldo, List<string> senha, double saldoAtualizado)
+        public static void MostrarSaldoTotalBanco(List<string> nome, List<double> saldo, List<string> senha)
         {
             Console.ForegroundColor = ConsoleColor.Green;
             Console.Clear();
@@ -228,6 +228,7 @@ namespace Usuarios
             Console.ResetColor();
             Console.WriteLine("\n\nUsuários disponíveis: \n");
 
+            // Mostrar quantos usuários tem no banco (facilitar o acesso)
             for (int i = 0; i < nome.Count(); i++)
             {
                 Console.ForegroundColor = ConsoleColor.Magenta;
@@ -252,9 +253,6 @@ namespace Usuarios
                 return;
             }
 
-            // Limite de tentativas pra achar o nome no banco
-            int tentativas = 0;
-
             Console.Write("\nDigite o nome completo do usuário para checar saldo total da conta: ");
             string nomeUsuario = Console.ReadLine();
 
@@ -270,12 +268,11 @@ namespace Usuarios
                     {
                         saldo[i] = Banco.saldoUsuario2;
                     }
-                    Console.WriteLine($"Nome usuário: {nome[i]}");
-                    Console.WriteLine($"Saldo usuário: {saldo[i]}");
+                    Console.WriteLine($"\nNome usuário: {nome[i]}");
+                    Console.WriteLine($"Saldo total usuário: {saldo[i]}");
                 }
 
             }
-            Console.WriteLine("\n\n");
             Usuario.LimparTerminal();
 
         }
@@ -283,20 +280,25 @@ namespace Usuarios
         // # Método para apresentar usuário unico
         public static void DetalhesUsuario(List<string> nome, List<double> saldo, List<int> idade)
         {
-            Console.ForegroundColor = ConsoleColor.DarkYellow;
-            Console.WriteLine("\n\n***DETALHES DO USUÁRIO***");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.Clear();
+            Console.WriteLine(@"╔═════════════════════════ DETALHES USUÁRIO ════════════════════════╗");
             Console.ResetColor();
 
-            Console.Write("Digite o nome do usuario: ");
+
+            Console.Write("                      Digite o nome do usuario: ");
             string nomeUsuario = Console.ReadLine();
 
             for (int i = 0; i < nome.Count; i++)
             {
                 if (nomeUsuario == nome[i])
                 {
-                    Console.WriteLine($"Nome usuário: {nome[i]}");
-                    Console.WriteLine($"Saldo usuário: {saldo[i]}");
-                    Console.WriteLine($"Idade usuário: {idade[i]}");
+                    Console.WriteLine("\n\n");
+                    Console.WriteLine(@"            ╔═════════════════════════════════════════════════╗");
+                    Console.WriteLine($"                        Nome usuário: {nome[i]}");
+                    Console.WriteLine($"                        Saldo usuário: {saldo[i]}");
+                    Console.WriteLine($"                        Idade usuário: {idade[i]}");
+                    Console.WriteLine($"                        CPF usuário: {cpf[i]}");
                 }
             }
 
