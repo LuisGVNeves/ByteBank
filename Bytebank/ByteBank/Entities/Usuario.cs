@@ -45,58 +45,138 @@ namespace Usuarios
         // # Método para deletar o usuário
         public static void DeletarUsuario(List<string> nome, List<int> idade, List<double> saldo, List<string> cpf, List<string> senha)
         {
-            Console.Write("\nDigite o nome do usuário: ");
-            string nomeDeletar = Console.ReadLine();
+            Console.Clear();
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.Clear();
+            Console.WriteLine(@"╔═════════════════════════ DELETAR CONTA ════════════════════════╗");
+            Console.ResetColor();
 
+            // Usuarios disponiveis
             for (int i = 0; i < nome.Count(); i++)
             {
-                if (nomeDeletar == nome[i])
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.Write("\n                          Nome:");
+                Console.ResetColor();
+                Console.Write($"  {nome[i]}");
+
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.Write("\n                          Idade:");
+                Console.ResetColor();
+                Console.Write($"  {idade[i]}");
+
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.Write("\n                          Saldo:");
+                Console.ResetColor();
+                Console.Write($"  {saldo[i]} R$");
+
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.Write("\n                          CPF:");
+                Console.ResetColor();
+                Console.Write($"  {cpf[i]}\n");
+
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.Write("            ════════════════════════════════════════════");
+                Console.ResetColor();
+
+            }
+
+            // Verifica se não tem ninguém cadastrado então o menu não aparece para deletar
+            if (Program.contadorUsuarios == 0)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("\n\n                     USUÁRIO NÃO ACHADO\n");
+                Console.ResetColor();
+
+                System.Threading.Thread.Sleep(1500);
+                Console.Clear();
+
+                Program.MostrarMenuPrincipal();
+                return;
+            }
+
+            // Remover usuario
+            Console.Write("\n\n\nDigite o nome a deletar: ");
+            string nomeDeletar = Console.ReadLine();
+
+            int nomePercorrido = nome.FindIndex(nome => nome == nomeDeletar);
+
+            while(nomePercorrido == -1)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("\nNOME NÃO ACHADO");
+                Console.ResetColor();
+
+                Console.Write("\nDeseja tentar de novo? SIM ou NÃO: ");
+                string respostaUsuario = Console.ReadLine().ToUpper();
+
+                Console.ForegroundColor = ConsoleColor.DarkGray;
+                Console.Write("════════════════════════════════════════════");
+                Console.ResetColor();
+
+                if (respostaUsuario == "SIM")
                 {
-                    Console.Write($"\n" +
-                    $"O usuário: {nome[i]} irá ser deletado, deseja realmente excluir a conta? SIM ou NÃO: ");
-                    string perguntaConfirmacao = Console.ReadLine().ToUpper();
+                    Console.Write("\n\nDigite o nome a deletar: ");
+                    nomeDeletar = Console.ReadLine();
 
-                    if (perguntaConfirmacao == "SIM")
-                    {
-
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine($"\nUsuário {nome[i]} deletado com sucesso !\n");
-                        Console.ResetColor();
-
-                        nome.Remove(nome[i]);
-                        idade.Remove(idade[i]);
-                        saldo.Remove(saldo[i]);
-                        cpf.Remove(cpf[i]);
-                        senha.Remove(senha[i]);
-
-                        System.Threading.Thread.Sleep(1500);
-                        Console.Clear();
-
-                        Program.MostrarMenuPrincipal();
-                    }
-                    else if (perguntaConfirmacao == "NAO" || perguntaConfirmacao == "NÃO")
-                    {
-                        Console.ForegroundColor = ConsoleColor.Green;
-                        Console.WriteLine("\nOperação cancelada com sucesso !\n");
-                        Console.ResetColor();
-
-                        System.Threading.Thread.Sleep(1500);
-                        Console.Clear();
-
-                        Program.MostrarMenuPrincipal();
-                    }
+                    nomePercorrido = nome.FindIndex(nome => nome == nomeDeletar);
                 }
-                else
+
+                if (respostaUsuario == "NÃO" || respostaUsuario == "NAO")
                 {
+                    Console.Clear();
+
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("\nUSUÁRIO NÃO ACHADO\n");
+                    Console.WriteLine("\n\n                     Voltando ao menu principal\n");
                     Console.ResetColor();
+
+                    System.Threading.Thread.Sleep(1000);
+                    Console.Clear();
+
+                    Program.MostrarMenuPrincipal();
+                    return;
                 }
             }
 
-            Console.WriteLine("\nConta deletada com sucesso");
-            Console.Clear();
-            Program.MostrarMenuPrincipal();
+            Console.Write($"\nO usuário: {nomeDeletar} irá ser deletado, deseja realmente excluir a conta? SIM ou NÃO: ");
+            string perguntaConfirmacao = Console.ReadLine().ToUpper();
+
+            if (perguntaConfirmacao == "SIM")
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine($"\nUsuário {nomeDeletar} deletado com sucesso !\n");
+                Console.ResetColor();
+
+                cpf.Remove(nomeDeletar);
+                nome.RemoveAt(nomePercorrido);
+                senha.RemoveAt(nomePercorrido);
+                saldo.RemoveAt(nomePercorrido);
+
+                // Limite de usuarios criados vai diminuir quando excluir usuario
+                Program.contadorUsuarios--;
+
+                System.Threading.Thread.Sleep(1500);
+                Console.Clear();
+
+                Program.MostrarMenuPrincipal();
+            }
+            else if (perguntaConfirmacao == "NAO" || perguntaConfirmacao == "NÃO")
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("\nOperação cancelada com sucesso !\n");
+                Console.ResetColor();
+
+                System.Threading.Thread.Sleep(1500);
+                Console.Clear();
+
+                Program.MostrarMenuPrincipal();
+            }
+            else
+            {
+                Console.Clear();
+                Program.MostrarMenuPrincipal();
+            }
+
+            return;
         }
 
         // # Método para listar todos os usuários no banco
@@ -127,7 +207,12 @@ namespace Usuarios
                 Console.ForegroundColor = ConsoleColor.Magenta;
                 Console.Write("\n                               CPF:");
                 Console.ResetColor();
-                Console.Write($"  {cpf[i]}");
+                Console.Write($"  {cpf[i]}\n");
+
+                Console.ForegroundColor = ConsoleColor.Magenta;
+                Console.Write("                   ════════════════════════════════════════════");
+                Console.ResetColor();
+
             }
 
             Console.WriteLine("\n\n\n");
@@ -279,7 +364,7 @@ namespace Usuarios
                 Console.Clear();
                 Program.MenuInicial();
                 Console.Clear();
-                Program.MenuInicial();
+                Program.MostrarMenuPrincipal();
             }
         }
     }

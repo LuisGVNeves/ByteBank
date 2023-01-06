@@ -51,7 +51,7 @@ namespace byteBank
             Console.ResetColor();
             Console.WriteLine("\n\n     ByteBank é um banco terminal feito em C#, com conhecimentos aprendidos");
             Console.WriteLine("     na escola Imã Learning Place.");
-            Console.Write("\n\n     Deseja iniciar um cadastro no banco BYTEBANK? Sim ou Não: ");
+            Console.Write("\n\n     Deseja iniciar o BYTEBANK? Sim ou Não: ");
 
             string respostaUsuario = Console.ReadLine().ToUpper();
 
