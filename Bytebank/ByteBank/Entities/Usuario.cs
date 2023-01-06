@@ -202,7 +202,7 @@ namespace Usuarios
                 Console.ForegroundColor = ConsoleColor.Magenta;
                 Console.Write("\n                               Saldo:");
                 Console.ResetColor();
-                Console.Write($"  {saldo[i]} R$");
+                Console.Write($"  {saldo[i].ToString("F2", CultureInfo.InvariantCulture)} R$");
 
                 Console.ForegroundColor = ConsoleColor.Magenta;
                 Console.Write("\n                               CPF:");
@@ -269,7 +269,7 @@ namespace Usuarios
                         saldo[i] = Banco.saldoUsuario2;
                     }
                     Console.WriteLine($"\nNome usuário: {nome[i]}");
-                    Console.WriteLine($"Saldo total usuário: {saldo[i]}");
+                    Console.WriteLine($"Saldo total usuário: {(saldo[i].ToString("F2", CultureInfo.InvariantCulture))}");
                 }
 
             }
@@ -296,7 +296,7 @@ namespace Usuarios
                     Console.WriteLine("\n\n");
                     Console.WriteLine(@"            ╔═════════════════════════════════════════════════╗");
                     Console.WriteLine($"                        Nome usuário: {nome[i]}");
-                    Console.WriteLine($"                        Saldo usuário: {saldo[i]}");
+                    Console.WriteLine($"                        Saldo usuário: {saldo[i].ToString("F2", CultureInfo.InvariantCulture)}");
                     Console.WriteLine($"                        Idade usuário: {idade[i]}");
                     Console.WriteLine($"                        CPF usuário: {cpf[i]}");
                 }
