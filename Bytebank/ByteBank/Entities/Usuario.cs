@@ -41,7 +41,6 @@ namespace Usuarios
             Program.MostrarMenuPrincipal();
         }
 
-
         // # Método para deletar o usuário
         public static void DeletarUsuario(List<string> nome, List<int> idade, List<double> saldo, List<string> cpf, List<string> senha)
         {
@@ -50,6 +49,7 @@ namespace Usuarios
             Console.Clear();
             Console.WriteLine(@"╔═════════════════════════ DELETAR CONTA ════════════════════════╗");
             Console.ResetColor();
+            Console.WriteLine("\n\n Usuários cadastrados:");
 
             // Usuarios disponiveis
             for (int i = 0; i < nome.Count(); i++)
@@ -222,6 +222,24 @@ namespace Usuarios
         // # Método para mostrar o saldo do usuario
         public static void MostrarSaldoTotalBanco(List<string> nome, List<double> saldo, List<string> senha)
         {
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.Clear();
+            Console.WriteLine(@"╔═════════════════════════ SALDO USUÁRIOS BYTEBANK ════════════════════════╗");
+            Console.ResetColor();
+
+            for (int i = 0; i < nome.Count(); i++)
+            {
+                Console.WriteLine("\n\nUsuários disponíveis: \n");
+                Console.ForegroundColor = ConsoleColor.Magenta;
+                Console.Write("                               Nome:");
+                Console.ResetColor();
+                Console.Write($"  {nome[i]}\n");
+
+                Console.Write("\n                  ════════════════════════════════════════════\n\n");
+                Console.ResetColor();
+
+            }
+
             // Validação para ver se usuário quer checar algum nome antes mesmo de preencher um cadastro
             if (nome.Count() == 0)
             {
@@ -360,14 +378,12 @@ namespace Usuarios
 
                 Program.MostrarMenuPrincipal();
             }
-            if (perguntaUsuario == "NÃO" || perguntaUsuario == "NAO")
+            else
             {
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.WriteLine("\nRedirecionando para o inicío.. ");
                 Console.ResetColor();
                 System.Threading.Thread.Sleep(1000);
-                Console.Clear();
-                Program.MenuInicial();
                 Console.Clear();
                 Program.MostrarMenuPrincipal();
             }
