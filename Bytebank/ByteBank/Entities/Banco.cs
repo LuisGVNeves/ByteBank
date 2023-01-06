@@ -134,7 +134,7 @@ namespace ClasseBanco
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.Write("\n                          Saldo:");
                     Console.ResetColor();
-                    Console.Write($"  {saldo[i]} R$");
+                    Console.Write($"  {saldo[i].ToString("F2",CultureInfo.InvariantCulture)} R$");
 
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.Write("\n\n            ════════════════════════════════════════════\n");
@@ -169,7 +169,7 @@ namespace ClasseBanco
                                 Console.WriteLine("\n\nNão é possivel sacar, pois você não tem esse valor em conta");
                                 Console.ResetColor();
                                 Console.WriteLine($"\nUsuário: {nomeUsuario} ");
-                                Console.WriteLine($"\nValor atual da conta: {saldo[i]} R$");
+                                Console.WriteLine($"\nValor atual da conta: {saldo[i].ToString("F2", CultureInfo.InvariantCulture)} R$");
 
                                 Usuario.LimparTerminal();
                                 return;
@@ -195,7 +195,7 @@ namespace ClasseBanco
                                 Console.WriteLine($"            Comprovante: {comprovante.Next(50)}");
                                 Console.ResetColor();
                                 Console.WriteLine($"\n                          Usuário: {nomeUsuario} ");
-                                Console.WriteLine($"\n                          Saldo: {saldo[i] + qtdSacar} ");
+                                Console.WriteLine($"\n                          Saldo: {(saldo[i] + qtdSacar).ToString("F2", CultureInfo.InvariantCulture)} ");
 
                                 Console.WriteLine($"\n                          Solicitação de saque: {qtdSacar.ToString("F2", CultureInfo.InvariantCulture)} R$");
                                 Console.WriteLine($"\n                          Saldo atual: {saldoAtual} R$\n");
@@ -213,7 +213,7 @@ namespace ClasseBanco
                                 Console.ForegroundColor = ConsoleColor.Red;
                                 Console.WriteLine("Não é possível sacar, pois o saldo da conta é R$ 0.00");
                                 Console.ResetColor();
-                                Console.WriteLine($"Valor atual da conta: {saldo[i]}\n");
+                                Console.WriteLine($"Valor atual da conta: {saldo[i].ToString("F2", CultureInfo.InvariantCulture)}\n");
 
                                 Usuario.LimparTerminal();
                                 return;
@@ -318,7 +318,7 @@ namespace ClasseBanco
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.Write("\n                          Saldo:");
                     Console.ResetColor();
-                    Console.Write($"  {saldo[i]} R$");
+                    Console.Write($"  {saldo[i].ToString("F2", CultureInfo.InvariantCulture)} R$");
 
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.Write("\n\n            ════════════════════════════════════════════\n");
@@ -346,7 +346,7 @@ namespace ClasseBanco
                                 Console.WriteLine("\n\nNão é possivel depositar 0 ou menos reais na conta");
                                 Console.ResetColor();
                                 Console.WriteLine($"\nUsuário: {nomeUsuario} ");
-                                Console.WriteLine($"\nValor atual da conta: {saldo[i]} R$");
+                                Console.WriteLine($"\nValor atual da conta: {saldo[i].ToString("F2", CultureInfo.InvariantCulture)} R$");
 
                                 Usuario.LimparTerminal();
                                 return;
@@ -372,10 +372,10 @@ namespace ClasseBanco
                                 Console.WriteLine($"            Comprovante: {comprovante.Next(50)}");
                                 Console.ResetColor();
                                 Console.WriteLine($"\n                          Usuário: {nomeUsuario} ");
-                                Console.WriteLine($"\n                          Saldo: {saldo[i] - qtdDeposito} ");
+                                Console.WriteLine($"\n                          Saldo: {(saldo[i] - qtdDeposito).ToString("F2", CultureInfo.InvariantCulture)} ");
 
                                 Console.WriteLine($"\n                          Solicitação de depósito: {qtdDeposito.ToString("F2", CultureInfo.InvariantCulture)} R$");
-                                Console.WriteLine($"\n                          Saldo atual: {saldoAtual} R$\n");
+                                Console.WriteLine($"\n                          Saldo atual: {saldoAtual.ToString("F2", CultureInfo.InvariantCulture)} R$\n");
 
                                 Console.ForegroundColor = ConsoleColor.DarkGray;
                                 Console.WriteLine(@"                 ════════════════════════════════════════════");
@@ -388,7 +388,7 @@ namespace ClasseBanco
                     }
 
                     Console.ForegroundColor = ConsoleColor.Green;
-                    Console.WriteLine($"\nSaque de {qtdDeposito} R$ realizado com sucesso !\n");
+                    Console.WriteLine($"\nSaque de {qtdDeposito.ToString("F4", CultureInfo.InvariantCulture)} R$ realizado com sucesso !\n");
                     Console.ResetColor();
 
                 }
@@ -596,12 +596,12 @@ namespace ClasseBanco
                     Console.WriteLine($"            Comprovante: {comprovante.Next(50)}");
                     Console.ResetColor();
                     Console.WriteLine($"\n                          Usuário: {usuarioEnviarTransferencia} ");
-                    Console.WriteLine($"\n                          Saldo: {saldoUsuarioUmAntigo}");
+                    Console.WriteLine($"\n                          Saldo: {saldoUsuarioUmAntigo.ToString("F2", CultureInfo.InvariantCulture)}");
                     Console.WriteLine("                     ----------------------------");
                     Console.WriteLine($"\n                          Solicitação de transferência: - {qtdTransferencia.ToString("F2", CultureInfo.InvariantCulture)} R$\n");
                     Console.WriteLine("                     ----------------------------");
 
-                    Console.WriteLine($"\n                          Saldo atual: {saldoUsuario1} R$\n");
+                    Console.WriteLine($"\n                          Saldo atual: {saldoUsuario1.ToString("F2", CultureInfo.InvariantCulture)} R$\n");
 
                     Console.ForegroundColor = ConsoleColor.DarkGray;
                     Console.WriteLine(@"                 ════════════════════════════════════════════");

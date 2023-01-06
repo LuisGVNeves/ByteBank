@@ -146,7 +146,7 @@ namespace Usuarios
                 Console.WriteLine($"\nUsuário {nomeDeletar} deletado com sucesso !\n");
                 Console.ResetColor();
 
-                cpf.Remove(nomeDeletar);
+                cpf.RemoveAt(nomePercorrido);
                 nome.RemoveAt(nomePercorrido);
                 senha.RemoveAt(nomePercorrido);
                 saldo.RemoveAt(nomePercorrido);
