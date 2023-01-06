@@ -100,52 +100,36 @@ namespace validacoes
         public static void ValidarCPF(List<string> cpf)
         {
             string cpfUsuario = "";
-            string cpfAtualizado = "";
-            
+
             Console.Write("\n                      Digite o cpf do usuário: ");
             Console.ForegroundColor = ConsoleColor.Blue;
             cpfUsuario = Console.ReadLine();
             Console.ResetColor();
 
-            cpf.Add(cpfUsuario);
-            /*
-            bool ehNumero = int.TryParse(cpfUsuario, out int n);
 
-            while (ehNumero == false)
+            IsCpf(cpfUsuario);
+
+            if(IsCpf(cpfUsuario) == true)
             {
-
-                Console.Write("\n                      CPF inválido digite novamente: ");
-                Console.ForegroundColor = ConsoleColor.Blue;
-                cpfUsuario = Console.ReadLine();
-                Console.ResetColor();
-
-                ehNumero = int.TryParse(cpfUsuario, out int x);
+                cpf.Add(cpfUsuario);
             }
-            while (ehNumero == true)
+            else
             {
-                if (cpfUsuario.Length < 11)
+                while(IsCpf(cpfUsuario) == false)
                 {
-                    Console.Write("\n                      CPF inválido digite novamente: ");
+                    Console.Write("\n                      Digite um CPF válido: ");
                     Console.ForegroundColor = ConsoleColor.Blue;
                     cpfUsuario = Console.ReadLine();
-
                     Console.ResetColor();
-                }
-                else
-                {
-                    cpfAtualizado += cpfUsuario.Substring(0, 3);
-                    cpfAtualizado += ".";
-                    cpfAtualizado += cpfUsuario.Substring(3, 3);
-                    cpfAtualizado += ".";
-                    cpfAtualizado += cpfUsuario.Substring(6, 3);
-                    cpfAtualizado += "-";
-                    cpfAtualizado += cpfUsuario[cpfUsuario.Length - 2];
-                    cpfAtualizado += cpfUsuario[cpfUsuario.Length - 1];
-                    break;
-                }
 
+                    IsCpf(cpfUsuario);
+
+                    if(IsCpf(cpfUsuario) == true)
+                    {
+                        break;
+                    }
+                }
             }
-            */
 
 
         }
@@ -173,6 +157,43 @@ namespace validacoes
                 }
             }
             senha.Add(senhaUsuario);
+        }
+
+        // Referência https://www.macoratti.net/11/09/c_val1.htm
+        public static bool IsCpf(string cpf)
+        {
+            int[] multiplicador1 = new int[9] { 10, 9, 8, 7, 6, 5, 4, 3, 2 };
+            int[] multiplicador2 = new int[10] { 11, 10, 9, 8, 7, 6, 5, 4, 3, 2 };
+            string tempCpf;
+            string digito;
+            int soma;
+            int resto;
+            cpf = cpf.Trim();
+            cpf = cpf.Replace(".", "").Replace("-", "");
+            if (cpf.Length != 11)
+                return false;
+            tempCpf = cpf.Substring(0, 9);
+            soma = 0;
+
+            for (int i = 0; i < 9; i++)
+                soma += int.Parse(tempCpf[i].ToString()) * multiplicador1[i];
+            resto = soma % 11;
+            if (resto < 2)
+                resto = 0;
+            else
+                resto = 11 - resto;
+            digito = resto.ToString();
+            tempCpf = tempCpf + digito;
+            soma = 0;
+            for (int i = 0; i < 10; i++)
+                soma += int.Parse(tempCpf[i].ToString()) * multiplicador2[i];
+            resto = soma % 11;
+            if (resto < 2)
+                resto = 0;
+            else
+                resto = 11 - resto;
+            digito = digito + resto.ToString();
+            return cpf.EndsWith(digito);
         }
     }
 }
