@@ -189,7 +189,7 @@ namespace ClasseBanco
                                 Console.Clear();
 
                                 Console.ForegroundColor = ConsoleColor.DarkGray;
-                                Console.WriteLine(@"╔═════════════════════════ COMPROVANTE DE TRANSFERÊNCIA ════════════════════════╗");
+                                Console.WriteLine(@"╔═════════════════════════ COMPROVANTE DE SAQUE ════════════════════════╗");
 
                                 Console.WriteLine(@"                 ════════════════════════════════════════════");
                                 Console.WriteLine($"            Comprovante: {comprovante.Next(50)}");
@@ -256,40 +256,160 @@ namespace ClasseBanco
             Console.Write("\nDigite o nome do usuário que deseja realizar o deposito: ");
             string nomeUsuario = Console.ReadLine();
 
-            for (int i = 0; i < nome.Count(); i++)
+            // Procurar nome do usuário na lista de nomes
+            int nomePercorrido = nome.FindIndex(nome => nome == nomeUsuario);
+
+            // Enquanto não achar o usuário, perguntar de novo se deseja tentar novamente
+            while (nomePercorrido == -1)
             {
-                if (nome[i] == nomeUsuario)
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("\nNOME NÃO ACHADO");
+                Console.ResetColor();
+
+                Console.Write("\nDeseja tentar de novo? SIM ou NÃO: ");
+                string respostaUsuario = Console.ReadLine().ToUpper();
+
+
+                Console.ForegroundColor = ConsoleColor.DarkGray;
+                Console.Write("════════════════════════════════════════════");
+                Console.ResetColor();
+
+                if (respostaUsuario == "SIM")
                 {
-                    if (qtdDeposito > 0)
-                    {
-                        saldo[i] += qtdDeposito;
+                    Console.Write("\n\nDigite o nome do usuário que deseja realizar o deposito: ");
+                    nomeUsuario = Console.ReadLine();
 
-                        Console.WriteLine($"\nValor depositado: {qtdDeposito.ToString("F2", CultureInfo.InvariantCulture)}\n");
-                        Console.WriteLine($"Valor atual da conta: {saldo[i]}\n");
-
-                        Usuario.LimparTerminal();
-                    }
-                    else
-                    {
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("\nNão é possível depositar, pois o valor do deposito é R$ 0.00");
-                        Console.ResetColor();
-                        Console.WriteLine($"Valor atual da conta: {saldo[i]}\n");
-
-                        Usuario.LimparTerminal();
-                    }
+                    nomePercorrido = nome.FindIndex(nome => nome == nomeUsuario);
                 }
-                else
+
+                if (respostaUsuario == "NÃO" || respostaUsuario == "NAO")
                 {
+                    Console.Clear();
+
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("\nUSUÁRIO NÃO ENCONTRADO");
+                    Console.WriteLine("\n\n                     Voltando ao menu principal\n");
                     Console.ResetColor();
 
                     System.Threading.Thread.Sleep(1000);
-                    Usuario.LimparTerminal();
+                    Console.Clear();
+
+                    Program.MostrarMenuPrincipal();
+                    return;
                 }
             }
 
+
+            // Quando achar o nome do usuario
+            if (nomePercorrido > -1)
+            {
+                Console.ForegroundColor = ConsoleColor.DarkRed;
+                Console.Clear();
+                Console.WriteLine(@"╔═════════════════════════ AREA DEPOSITO ════════════════════════╗");
+                Console.ResetColor();
+
+                // Mostrar dados do usuario escolhido
+                for (int i = 0; i < nome.Count(); i++)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.Write("\n                          Nome:");
+                    Console.ResetColor();
+                    Console.Write($"  {nome[i]}");
+
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.Write("\n                          Saldo:");
+                    Console.ResetColor();
+                    Console.Write($"  {saldo[i]} R$");
+
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.Write("\n\n            ════════════════════════════════════════════\n");
+                    Console.ResetColor();
+
+                }
+
+
+                // # Confirmação se usuário quer mesmo depositar o money
+                Console.Write($"\nO usuário {nomeUsuario} receber um depósito de {qtdDeposito} R$, confirma? SIM ou NÃO: ");
+                string perguntaConfirmacao = Console.ReadLine().ToUpper();
+
+                if (perguntaConfirmacao == "SIM")
+                {
+                    Random comprovante = new Random();
+
+                    for (int i = 0; i < nome.Count(); i++)
+                    {
+                        if (nomeUsuario == nome[i])
+                        {
+                            // valor do deposito baixo
+                            if (qtdDeposito < 0)
+                            {
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                Console.WriteLine("\n\nNão é possivel depositar 0 ou menos reais na conta");
+                                Console.ResetColor();
+                                Console.WriteLine($"\nUsuário: {nomeUsuario} ");
+                                Console.WriteLine($"\nValor atual da conta: {saldo[i]} R$");
+
+                                Usuario.LimparTerminal();
+                                return;
+                            }
+                            // Saque realizado
+                            else if (qtdDeposito > 0)
+                            {
+                                //  Saldo vai ser descontado no mento o valor do saque
+                                double saldoAtual = saldo[i] += qtdDeposito;
+
+                                Console.ForegroundColor = ConsoleColor.Green;
+                                Console.WriteLine("\n\n  Depósito realizado com sucesso !\n\n");
+                                Console.ResetColor();
+
+                                Console.ResetColor();
+                                System.Threading.Thread.Sleep(1100);
+                                Console.Clear();
+
+                                Console.ForegroundColor = ConsoleColor.DarkGray;
+                                Console.WriteLine(@"╔═════════════════════════ COMPROVANTE DE DEPÓSITO ════════════════════════╗");
+
+                                Console.WriteLine(@"                 ════════════════════════════════════════════");
+                                Console.WriteLine($"            Comprovante: {comprovante.Next(50)}");
+                                Console.ResetColor();
+                                Console.WriteLine($"\n                          Usuário: {nomeUsuario} ");
+                                Console.WriteLine($"\n                          Saldo: {saldo[i] - qtdDeposito} ");
+
+                                Console.WriteLine($"\n                          Solicitação de depósito: {qtdDeposito.ToString("F2", CultureInfo.InvariantCulture)} R$");
+                                Console.WriteLine($"\n                          Saldo atual: {saldoAtual} R$\n");
+
+                                Console.ForegroundColor = ConsoleColor.DarkGray;
+                                Console.WriteLine(@"                 ════════════════════════════════════════════");
+                                Console.ResetColor();
+
+                                Usuario.LimparTerminal();
+                                return;
+                            }
+                        }
+                    }
+
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine($"\nSaque de {qtdDeposito} R$ realizado com sucesso !\n");
+                    Console.ResetColor();
+
+                }
+                else if (perguntaConfirmacao == "NAO" || perguntaConfirmacao == "NÃO")
+                {
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine("\nSaque cancelado com sucesso !\n");
+                    Console.ResetColor();
+
+                    System.Threading.Thread.Sleep(1500);
+                    Console.Clear();
+
+                    Program.MostrarMenuPrincipal();
+                }
+                else
+                {
+                    Console.Clear();
+                    Program.MostrarMenuPrincipal();
+                }
+
+            }
         }
 
         public static void RealizarTransferencia(double qtdTransferencia, List<string> nome, List<double> saldo)
